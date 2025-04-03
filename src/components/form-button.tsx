@@ -8,14 +8,18 @@ interface Props extends HTMLAttributes<HTMLButtonElement> {
 
 const FormButton = ({ isSubmitting, children, ...props }: Props) => {
     return (
-        <Button
-            type="submit"
-            disabled={isSubmitting}
-            {...props}
-            className="w-full py-6 mt-2 disabled:opacity-90"
-        >
-            {isSubmitting ? <Spinner /> : children}
-        </Button>
+        <div className="flex justify-center">
+            <Button
+                type="submit"
+                disabled={isSubmitting}
+                {...props}
+                className={` py-6 mt-2 disabled:opacity-90 ${
+                    isSubmitting ? "w-1/2 rounded-full" : "w-full"
+                }`}
+            >
+                {isSubmitting ? <Spinner /> : children}
+            </Button>
+        </div>
     );
 };
 
