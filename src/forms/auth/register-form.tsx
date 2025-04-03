@@ -7,14 +7,26 @@ import { ArrowRight } from "lucide-react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
-const schema = z.object({
-    email: z.string().min(1, "Email is required").email("Email is not valid"),
-    password: z.string().min(1, "Password is required"),
-});
+const schema = z
+    .object({
+        displayName: z.string().min(1, "Display Name is required"),
+        email: z
+            .string()
+            .min(1, "Email is required")
+            .email("Email is not valid"),
+        password: z.string().min(6, "Password must be at least 6 characters"),
+        confirmPassword: z
+            .string()
+            .min(6, "Confirm Password must be at least 6 characters"),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords do not match",
+        path: ["confirmPassword"],
+    });
 
 type FormFields = z.infer<typeof schema>;
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const {
         register,
         formState: { errors, isSubmitting },
@@ -28,6 +40,13 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleSubmit(submitForm)}>
+            <InputField
+                displayName="Display Name:"
+                error={errors.displayName?.message}
+                register={register}
+                placeholder="John Doe"
+                name="displayName"
+            />
             <InputField
                 displayName="Email:"
                 error={errors.email?.message}
@@ -43,12 +62,19 @@ const LoginForm = () => {
                 name="password"
                 type="password"
             />
+            <InputField
+                displayName="Confirm Password:"
+                error={errors.confirmPassword?.message}
+                register={register}
+                name="confirmPassword"
+                type="password"
+            />
             <RootError message={errors.root?.message} />
             <FormButton isSubmitting={isSubmitting}>
-                Sign In <ArrowRight size={5} />
+                Create Account <ArrowRight size={5} />
             </FormButton>
         </form>
     );
 };
 
-export default LoginForm;
+export default RegisterForm;
