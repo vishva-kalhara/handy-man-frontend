@@ -23,7 +23,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${inter.variable} antialiased bg-[#f4f4f4]`}>
                 <Nav />
-                <section className="min-h-[50dvh] py-10 px-6">
+                <section className="min-h-[50dvh] py-16 md:py-24 px-6">
                     <div className="max-w-7xl mx-auto">{children}</div>
                 </section>
                 <Footer />
