@@ -52,7 +52,7 @@ const Nav = () => {
 
     return (
         <div className="p-6 w-full relative">
-            <div className=" rounded-md bg-my-dark py-4 px-6 w-full flex justify-between items-center">
+            <div className=" rounded-md bg-[#1e1e1e] py-4 px-6 w-full flex justify-between items-center">
                 <Link href="/">
                     <BlackLogo color="white" />
                 </Link>
