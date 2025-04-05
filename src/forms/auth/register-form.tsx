@@ -2,8 +2,11 @@
 import FormButton from "@/components/form-button";
 import InputField from "@/components/input-field";
 import RootError from "@/components/root-error";
+import { useCreateAccountMutation } from "@/redux/slices/auth-api-slice";
+import { ApiErrorResponse } from "@/types/api-error-reponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -24,19 +27,44 @@ const schema = z
         path: ["confirmPassword"],
     });
 
-type FormFields = z.infer<typeof schema>;
+export type RegisterRequestData = z.infer<typeof schema>;
 
 const RegisterForm = () => {
     const {
         register,
         formState: { errors, isSubmitting },
         handleSubmit,
-    } = useForm<FormFields>({ resolver: zodResolver(schema) });
+        setError,
+    } = useForm<RegisterRequestData>({
+        resolver: zodResolver(schema),
+    });
 
-    const submitForm: SubmitHandler<FormFields> = async (data) => {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        console.log(data);
+    const [mutationFn, { isSuccess, error, data, isError }] =
+        useCreateAccountMutation();
+
+    const submitForm: SubmitHandler<RegisterRequestData> = async (data) => {
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await mutationFn(data);
+        } catch (err) {
+            console.error("Unexpected error in mutation:", err);
+        }
     };
+
+    useEffect(() => {
+        if (isError) {
+            const err = error as ApiErrorResponse;
+            setError("root", {
+                message: err.data.message,
+            });
+            console.error(err);
+        }
+    }, [error, isError, setError]);
+
+    useEffect(() => {
+        console.log(data?.token);
+        if (data?.token) localStorage.setItem("token", data?.token);
+    }, [data, isSuccess]);
 
     return (
         <form onSubmit={handleSubmit(submitForm)}>
