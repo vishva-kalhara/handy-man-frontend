@@ -35,10 +35,7 @@ const LoggedInButtons = () => {
                     <Bell size={5} />
                 </Button>
             </Link>
-            <Link
-                href={"/auth/create-account"}
-                className="ms-4 focus:outline-0"
-            >
+            <Link href={"/tasks/new-task"} className="ms-4 focus:outline-0">
                 <Button variant={"white"} className="gap-2">
                     <Plus size={5} /> New Task {"  "}
                 </Button>

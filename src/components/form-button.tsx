@@ -13,7 +13,7 @@ const FormButton = ({ isSubmitting, children, ...props }: Props) => {
                 type="submit"
                 disabled={isSubmitting}
                 {...props}
-                className={` py-6 mt-2 disabled:opacity-90 ${
+                className={` py-6 mt-2 disabled:opacity-90 text-white ${
                     isSubmitting ? "w-1/2 rounded-full" : "w-full"
                 }`}
             >

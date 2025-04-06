@@ -6,6 +6,7 @@ import { useCreateAccountMutation } from "@/redux/slices/auth-api-slice";
 import { ApiErrorResponse } from "@/types/api-error-reponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -39,6 +40,8 @@ const RegisterForm = () => {
         resolver: zodResolver(schema),
     });
 
+    const router = useRouter();
+
     const [mutationFn, { isSuccess, error, data, isError }] =
         useCreateAccountMutation();
 
@@ -62,9 +65,11 @@ const RegisterForm = () => {
     }, [error, isError, setError]);
 
     useEffect(() => {
-        console.log(data?.token);
-        if (data?.token) localStorage.setItem("token", data?.token);
-    }, [data, isSuccess]);
+        if (data?.token) {
+            localStorage.setItem("token", data?.token);
+            router.push("/");
+        }
+    }, [data, isSuccess, router]);
 
     return (
         <form onSubmit={handleSubmit(submitForm)}>
