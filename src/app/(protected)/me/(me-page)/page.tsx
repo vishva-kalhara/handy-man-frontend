@@ -4,7 +4,7 @@ import {
     useCreateCategoryMutation,
     useGetCategoriesQuery,
 } from "@/redux/slices/categories-api-slice";
-import { Category } from "@/types/categories/category";
+import { Category } from "@/types/category";
 import { useEffect } from "react";
 
 const Page = () => {

@@ -1,4 +1,4 @@
-import { Category } from "@/types/categories/category";
+import { Category } from "@/types/category";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const categoriesApiSlice = createApi({
