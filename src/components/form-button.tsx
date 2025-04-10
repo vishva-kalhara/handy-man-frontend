@@ -17,7 +17,7 @@ const FormButton = ({ isSubmitting, children, ...props }: Props) => {
                     isSubmitting ? "w-1/2 rounded-full" : "w-full"
                 }`}
             >
-                {isSubmitting ? <Spinner /> : children}
+                {isSubmitting ? <Spinner variant={"white"} /> : children}
             </Button>
         </div>
     );

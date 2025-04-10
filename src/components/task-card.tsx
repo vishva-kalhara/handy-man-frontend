@@ -56,11 +56,11 @@ const TaskCard = ({ task }: { task: Task }) => {
                             LKR {task.maxPrice}
                         </h4>
                         {task.isEmergency && (
-                            <div className="py-0.5 px-1 bg-red-100 border border-red-200 rounded-full">
+                            <div className="py-0.5 px-1 bg-red-50 border border-red-200 rounded-full">
                                 <span>🔥</span>
                             </div>
                         )}
-                        <div className="h-[28px] flex items-center px-2 bg-blue-100 border border-blue-200 rounded-full">
+                        <div className="h-[28px] flex items-center px-2 bg-blue-50 border border-blue-200 rounded-full">
                             <span className="text-xs text-blue-500 font-semibold">
                                 {task.category.categoryName}
                             </span>

@@ -8,6 +8,7 @@ interface Props<T extends FieldValues> extends HTMLAttributes<HTMLDivElement> {
     placeholder?: string;
     error: undefined | string;
     name: Path<T>;
+    hasDisplayName?: boolean;
     type?: HTMLInputTypeAttribute | undefined;
     register: UseFormRegister<T>;
 }
@@ -15,6 +16,7 @@ interface Props<T extends FieldValues> extends HTMLAttributes<HTMLDivElement> {
 const InputField = <T extends FieldValues>({
     displayName,
     name,
+    hasDisplayName = true,
     register,
     type = "text",
     placeholder,
@@ -23,7 +25,7 @@ const InputField = <T extends FieldValues>({
 }: Props<T>) => {
     return (
         <div className="mb-6" {...props}>
-            <Label>{displayName}</Label>
+            {hasDisplayName && <Label>{displayName}</Label>}
             <Input
                 type={type}
                 placeholder={placeholder}

@@ -6,7 +6,7 @@ const Page = () => {
     return (
         <Card
             heading="Create Account"
-            description="30 seconds to sign up &hyphen; then post tasks or bid on jobs immediately."
+            description="30 seconds to sign up &#8211; then post tasks or bid on jobs immediately."
             extraNodes={
                 <BlueLink
                     href="/auth/sign-in"

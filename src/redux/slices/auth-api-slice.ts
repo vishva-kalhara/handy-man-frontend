@@ -1,5 +1,5 @@
 import { RegisterRequestData } from "@/forms/auth/register-form";
-import { AuthResponse } from "@/types/auth/auth-response";
+import { AuthResponse } from "@/types/auth-response";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const authApiSlice = createApi({
