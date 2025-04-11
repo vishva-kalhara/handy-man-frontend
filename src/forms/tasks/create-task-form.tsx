@@ -6,8 +6,12 @@ import ImageUpload from "@/components/image-upload";
 import InputField from "@/components/input-field";
 import RootError from "@/components/root-error";
 import SelectField from "@/components/select-field";
+import { useGetCategoriesQuery } from "@/redux/slices/categories-api-slice";
+import { useCreateTaskMutation } from "@/redux/slices/tasks-api-slice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -19,7 +23,7 @@ const schema = z.object({
     description: z.string().min(1, "Description is required!"),
     maxPrice: z.coerce.number().min(1, "Max Price is required!"),
     isEmergency: z.boolean().default(false),
-    category: z
+    categoryId: z
         .string({ required_error: "Category is required!" })
         .min(1, "Category is required!"),
 });
@@ -33,14 +37,33 @@ const CreateTaskForm = () => {
         handleSubmit,
         setValue,
         watch,
-    } = useForm({ resolver: zodResolver(schema) });
+    } = useForm({
+        resolver: zodResolver(schema),
+    });
+
+    const { data: categories } = useGetCategoriesQuery();
+
+    const router = useRouter();
+
+    const [createTask, { isSuccess, data: createdTask }] =
+        useCreateTaskMutation();
 
     const submitForm: SubmitHandler<CreateTaskFormData> = async (data) => {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        console.log(data);
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await createTask(data);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    const selectedFruit = watch("category");
+    useEffect(() => {
+        if (isSuccess) {
+            router.push(`/tasks/${createdTask?.id}`);
+        }
+    }, [createdTask?.id, isSuccess, router]);
+
+    const selectedFruit = watch("categoryId");
     const isEmergency = watch("isEmergency");
 
     return (
@@ -73,21 +96,17 @@ const CreateTaskForm = () => {
             />
             <SelectField
                 placeholder="Select a category"
-                data={[
-                    { id: "1", categoryName: "Category 1" },
-                    { id: "2", categoryName: "Category 2" },
-                    { id: "3", categoryName: "Category 3" },
-                ]}
+                data={categories}
                 displayName="Category:"
                 value={selectedFruit}
                 onValueChange={(value) =>
-                    setValue("category", value, {
+                    setValue("categoryId", value, {
                         shouldValidate: true,
                         shouldDirty: true,
                         shouldTouch: true,
                     })
                 }
-                error={errors.category?.message}
+                error={errors.categoryId?.message}
             />
             <FormSwitch
                 checked={isEmergency!}

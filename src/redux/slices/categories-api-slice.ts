@@ -9,7 +9,7 @@ export const categoriesApiSlice = createApi({
     }),
     endpoints: (builder) => {
         return {
-            getCategories: builder.query<Category[], null>({
+            getCategories: builder.query<Category[], void>({
                 query: () => "/categories",
                 providesTags: ["categories"],
             }),

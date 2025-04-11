@@ -1,5 +1,4 @@
 "use client";
-
 import {
     Select,
     SelectContent,
@@ -16,7 +15,7 @@ type SelectFieldProps = {
     value?: string;
     onValueChange: (value: string) => void;
     error?: string;
-    data: { id: string; categoryName: string }[];
+    data: { id: string; categoryName: string }[] | undefined;
 };
 
 const SelectField: React.FC<SelectFieldProps> = ({
@@ -34,13 +33,23 @@ const SelectField: React.FC<SelectFieldProps> = ({
                 <SelectTrigger id="fruit-select" className="w-full">
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-h-80 overflow-auto">
                     <SelectGroup>
-                        {data.map((item) => (
-                            <SelectItem key={item.id} value={item.id}>
-                                {item.categoryName}
+                        {data?.length ? (
+                            [...data]
+                                .sort((a, b) =>
+                                    a.categoryName.localeCompare(b.categoryName)
+                                )
+                                .map((item) => (
+                                    <SelectItem key={item.id} value={item.id}>
+                                        {item.categoryName}
+                                    </SelectItem>
+                                ))
+                        ) : (
+                            <SelectItem key={"no items"} value={"no items"}>
+                                Loading...
                             </SelectItem>
-                        ))}
+                        )}
                     </SelectGroup>
                 </SelectContent>
             </Select>
