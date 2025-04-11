@@ -1,7 +1,10 @@
+"use client";
 import Link from "next/link";
 import BlackLogo from "./assets/BlackLogo";
 import { Button } from "./ui/button";
 import { Bell, Plus, UserRound } from "lucide-react";
+import Spinner from "./spinner";
+import { useGetMeQuery } from "@/redux/slices/user-api-slice";
 
 const NotLoggedInButtons = () => {
     return (
@@ -45,15 +48,23 @@ const LoggedInButtons = () => {
 };
 
 const Nav = () => {
-    const isLoggedIn = true;
+    const { isLoading, isError } = useGetMeQuery(null);
+
+    const isLoggedIn = !isError;
 
     return (
-        <div className="p-6 w-full relative">
-            <div className=" rounded-md bg-[#1e1e1e] py-4 px-6 w-full flex justify-between items-center">
+        <div className="p-6  w-full relative">
+            <div className="min-h-[68px] rounded-md bg-[#1e1e1e] py-4 px-6 w-full flex justify-between items-center">
                 <Link href="/">
                     <BlackLogo color="white" />
                 </Link>
-                {isLoggedIn ? <LoggedInButtons /> : <NotLoggedInButtons />}
+                {isLoading ? (
+                    <Spinner variant="white" className="mx-4" />
+                ) : isLoggedIn ? (
+                    <LoggedInButtons />
+                ) : (
+                    <NotLoggedInButtons />
+                )}
             </div>
         </div>
     );
