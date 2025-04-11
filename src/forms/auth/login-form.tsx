@@ -2,8 +2,12 @@
 import FormButton from "@/components/form-button";
 import InputField from "@/components/input-field";
 import RootError from "@/components/root-error";
+import { useLoginMutation } from "@/redux/slices/auth-api-slice";
+import { ApiErrorResponse } from "@/types/api-error-reponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -12,19 +16,47 @@ const schema = z.object({
     password: z.string().min(1, "Password is required"),
 });
 
-type FormFields = z.infer<typeof schema>;
+export type LoginRequestData = z.infer<typeof schema>;
 
 const LoginForm = () => {
     const {
         register,
         formState: { errors, isSubmitting },
         handleSubmit,
-    } = useForm<FormFields>({ resolver: zodResolver(schema) });
+        setError,
+    } = useForm<LoginRequestData>({ resolver: zodResolver(schema) });
 
-    const submitForm: SubmitHandler<FormFields> = async (data) => {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        console.log(data);
+    const router = useRouter();
+
+    const [mutationFn, { data, isSuccess, error, isError }] =
+        useLoginMutation();
+
+    const submitForm: SubmitHandler<LoginRequestData> = async (data) => {
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await mutationFn(data);
+        } catch (err) {
+            console.error("Unexpected error in mutation:", err);
+        }
     };
+
+    useEffect(() => {
+        if (isError) {
+            const err = error as ApiErrorResponse;
+            setError("root", {
+                message: err.data.message,
+            });
+            console.error(err);
+        }
+    }, [error, isError, setError]);
+
+    useEffect(() => {
+        if (data?.token) {
+            console.log("Login successful:", data);
+            localStorage.setItem("token", data?.token);
+            router.push("/");
+        }
+    }, [data, isSuccess, router]);
 
     return (
         <form onSubmit={handleSubmit(submitForm)}>

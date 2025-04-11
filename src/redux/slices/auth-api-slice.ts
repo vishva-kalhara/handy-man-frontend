@@ -1,3 +1,4 @@
+import { LoginRequestData } from "@/forms/auth/login-form";
 import { RegisterRequestData } from "@/forms/auth/register-form";
 import { AuthResponse } from "@/types/auth-response";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -20,8 +21,15 @@ export const authApiSlice = createApi({
                     body,
                 }),
             }),
+            login: builder.mutation<AuthResponse, LoginRequestData>({
+                query: (body) => ({
+                    url: "/auth/login",
+                    method: "POST",
+                    body,
+                }),
+            }),
         };
     },
 });
 
-export const { useCreateAccountMutation } = authApiSlice;
+export const { useCreateAccountMutation, useLoginMutation } = authApiSlice;
