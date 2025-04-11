@@ -25,22 +25,20 @@ const NotLoggedInButtons = () => {
 const LoggedInButtons = () => {
     return (
         <div className="flex">
-            <Link href={"/me"} className="hidden sm:flex focus:outline-0">
+            <Link href={"/me"} className="flex focus:outline-0">
                 <Button variant={"dark"}>
                     <UserRound size={5} />
                 </Button>
             </Link>
-            <Link
-                href={"/notifications"}
-                className="hidden sm:flex focus:outline-0"
-            >
+            <Link href={"/notifications"} className="flex focus:outline-0">
                 <Button variant={"dark"}>
                     <Bell size={5} />
                 </Button>
             </Link>
             <Link href={"/tasks/new-task"} className="ms-4 focus:outline-0">
                 <Button variant={"white"} className="gap-2">
-                    <Plus size={5} /> New Task {"  "}
+                    <Plus size={5} />
+                    <span className="hidden sm:block">New Task</span>
                 </Button>
             </Link>
         </div>
