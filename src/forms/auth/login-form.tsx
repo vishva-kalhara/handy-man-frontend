@@ -2,7 +2,10 @@
 import FormButton from "@/components/form-button";
 import InputField from "@/components/input-field";
 import RootError from "@/components/root-error";
-import { useLoginMutation } from "@/redux/slices/auth-api-slice";
+import {
+    useGetAuthQuery,
+    useLoginMutation,
+} from "@/redux/slices/auth-api-slice";
 import { ApiErrorResponse } from "@/types/api-error-reponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
@@ -24,12 +27,20 @@ const LoginForm = () => {
         formState: { errors, isSubmitting },
         handleSubmit,
         setError,
-    } = useForm<LoginRequestData>({ resolver: zodResolver(schema) });
+    } = useForm<LoginRequestData>({
+        resolver: zodResolver(schema),
+        defaultValues: {
+            email: "test@example.com",
+            password: "123456",
+        },
+    });
 
     const router = useRouter();
 
     const [mutationFn, { data, isSuccess, error, isError }] =
         useLoginMutation();
+
+    const { refetch } = useGetAuthQuery();
 
     const submitForm: SubmitHandler<LoginRequestData> = async (data) => {
         try {
@@ -54,9 +65,12 @@ const LoginForm = () => {
         if (data?.token) {
             console.log("Login successful:", data);
             localStorage.setItem("token", data?.token);
-            router.push("/");
+            setTimeout(async () => {
+                await refetch(); // 👈 force refetch after token is stored
+                router.push("/"); // 👈 navigate after refetch
+            }, 50);
         }
-    }, [data, isSuccess, router]);
+    }, [data, isSuccess, refetch, router]);
 
     return (
         <form onSubmit={handleSubmit(submitForm)}>

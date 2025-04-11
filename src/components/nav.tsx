@@ -4,7 +4,7 @@ import BlackLogo from "./assets/BlackLogo";
 import { Button } from "./ui/button";
 import { Bell, Plus, UserRound } from "lucide-react";
 import Spinner from "./spinner";
-import { useGetMeQuery } from "@/redux/slices/user-api-slice";
+import { useAuth } from "@/hooks/use-auth";
 
 const NotLoggedInButtons = () => {
     return (
@@ -46,9 +46,7 @@ const LoggedInButtons = () => {
 };
 
 const Nav = () => {
-    const { isLoading, isError } = useGetMeQuery(null);
-
-    const isLoggedIn = !isError;
+    const { isLoading, isLoggedIn } = useAuth();
 
     return (
         <div className="p-6  w-full relative">

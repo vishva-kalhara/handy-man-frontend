@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 const spinnerVarients = cva("relative rounded-full animate-spin duration-700", {
     variants: {
         variant: {
-            default: "border-blue-100 border-t-blue-600",
+            default: "border-blue-200 border-t-blue-600",
             white: "border-white/25 border-t-white",
         },
         size: {
