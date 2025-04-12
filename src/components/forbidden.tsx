@@ -7,13 +7,15 @@ const ForbiddenCard = () => {
             title="Access Restricted"
             description="This page is reserved for Handy Man members. Please sign in to
             view bids, post tasks, or continue helping your community."
-            action={{
-                text: "Sign In Now",
-                link: "/auth/sign-in",
-            }}
-            fallback={{
-                text: "Back to Home",
-                link: "/",
+            links={{
+                action: {
+                    text: "Sign In Now",
+                    link: "/auth/sign-in",
+                },
+                fallback: {
+                    text: "Back to Home",
+                    link: "/",
+                },
             }}
         />
     );

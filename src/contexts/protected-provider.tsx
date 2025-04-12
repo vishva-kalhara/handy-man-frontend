@@ -7,11 +7,11 @@ import { PropsWithChildren } from "react";
 const Protected = ({ children }: PropsWithChildren) => {
     const { isLoading, isLoggedIn } = useAuth();
 
-    if (isLoading) {
+    if (isLoading || isLoggedIn === undefined) {
         return <PageLoadingCard />;
     }
 
-    if (!isLoading && !isLoggedIn) {
+    if (!isLoggedIn) {
         return <ForbiddenCard />;
     }
 

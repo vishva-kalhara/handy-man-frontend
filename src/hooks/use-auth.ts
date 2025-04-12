@@ -3,9 +3,11 @@ import { useGetAuthQuery } from "@/redux/slices/auth-api-slice";
 import { useEffect, useState } from "react";
 
 export const useAuth = () => {
-    const { data, isLoading, isError, refetch } = useGetAuthQuery();
+    const { data, isLoading, isError, refetch, isSuccess } = useGetAuthQuery();
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(
+        undefined
+    );
 
     useEffect(() => {
         if (!isLoading && !isError) {
@@ -15,5 +17,5 @@ export const useAuth = () => {
         }
     }, [isLoading, isError, data]);
 
-    return { isLoggedIn, isLoading, isError, refetch, user: data };
+    return { isLoggedIn, isLoading, isError, refetch, user: data, isSuccess };
 };
