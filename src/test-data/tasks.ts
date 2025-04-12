@@ -31,13 +31,13 @@ export const tasks: Task[] = [
                 bidStatus: "PENDING",
                 createdAt: "2023-11-02T00:00:00Z",
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                associatedTask: null as any, // Placeholder to avoid circular reference
+                // Placeholder to avoid circular reference
                 bidder: {
                     id: "user2",
                     displayName: "Jane Smith",
                     profileImage:
                         "https://geediting.com/wp-content/uploads/2023/12/newimagesize-2023-04-02T192008.840.png",
-                    bio: "Professional plumber with 10 years of experience.",
+                    bio: "Professional plumber with 10 years of experience in handling a wide range of plumbing issues, including leak repairs, pipe installations, and maintenance. Jane is known for her attention to detail, reliability, and ability to provide long-lasting solutions to complex plumbing problems. She has worked on both residential and commercial projects, earning a reputation for delivering high-quality work and excellent customer service. Jane is committed to ensuring customer satisfaction and takes pride in her ability to diagnose and resolve plumbing issues efficiently. Her expertise and dedication make her a trusted choice for any plumbing-related task.",
                     myRating: 4.9,
                     reviewsIGot: [],
                 },
@@ -48,7 +48,7 @@ export const tasks: Task[] = [
         id: "2",
         title: "Paint living room",
         description:
-            "Repaint the living room walls with a fresh coat of paint.",
+            "Repainting the living room walls is a task that requires careful preparation and attention to detail to achieve a flawless finish. The goal is to refresh the space with a new coat of paint, enhancing the room's aesthetic appeal and creating a welcoming atmosphere. This task involves selecting the appropriate paint color and finish, preparing the walls by cleaning, sanding, and applying primer if necessary, and then applying the paint evenly to ensure a smooth and professional look. The handyman should have experience in interior painting, possess the necessary tools such as brushes, rollers, and drop cloths, and be able to work efficiently while protecting the furniture and flooring from paint splatters. The homeowner is looking for a skilled painter who can transform the living room into a vibrant and inviting space, paying close attention to detail and ensuring the job is completed to the highest standard.",
         image: "https://media.designcafe.com/wp-content/uploads/2024/08/18064403/simple-wall-painting-ideas.jpg",
         maxPrice: 300,
         isEmergency: false,

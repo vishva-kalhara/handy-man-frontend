@@ -11,7 +11,7 @@ export type Task = {
     isEmergency: boolean;
     taskStatus: "PENDING" | "WAITING_TO_COMPLETE" | "COMPLETED";
     createdAt: string;
-    creator: User;
+    creator: Pick<User, "id" | "profileImage" | "displayName" | "avgRating">;
     category: Category;
     bids: Bid[];
 };

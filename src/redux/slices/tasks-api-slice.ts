@@ -37,8 +37,34 @@ export const taskApiSlice = createApi({
                     };
                 },
             }),
+            getOneTask: builder.query<Task, string>({
+                query: (id) => {
+                    return {
+                        url: `/tasks/${id}`,
+                        method: "GET",
+                    };
+                },
+            }),
+            deleteTask: builder.mutation<void, string>({
+                query: (id) => {
+                    return {
+                        url: `/tasks/${id}`,
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Bearer ${
+                                localStorage.getItem("token") || ""
+                            }`,
+                        },
+                    };
+                },
+                invalidatesTags: ["tasks"],
+            }),
         };
     },
 });
 
-export const { useCreateTaskMutation } = taskApiSlice;
+export const {
+    useCreateTaskMutation,
+    useGetOneTaskQuery,
+    useDeleteTaskMutation,
+} = taskApiSlice;
