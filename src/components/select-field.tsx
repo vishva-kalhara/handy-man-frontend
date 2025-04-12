@@ -8,26 +8,31 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Label } from "./ui/label";
+import { HTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 
-type SelectFieldProps = {
+interface SelectFieldProps extends HTMLAttributes<HTMLDivElement> {
     displayName: string;
     placeholder: string;
     value?: string;
     onValueChange: (value: string) => void;
     error?: string;
     data: { id: string; categoryName: string }[] | undefined;
-};
+    valueSource?: "id" | "value";
+}
 
 const SelectField: React.FC<SelectFieldProps> = ({
     displayName,
     placeholder,
     data,
+    valueSource = "id",
+    className,
     value,
     onValueChange,
     error,
 }) => {
     return (
-        <div className="mb-6 flex flex-col">
+        <div className={cn("mb-6 flex flex-col", className)}>
             <Label className="mb-2">{displayName}</Label>
             <Select value={value} onValueChange={onValueChange}>
                 <SelectTrigger id="fruit-select" className="w-full">
@@ -41,7 +46,14 @@ const SelectField: React.FC<SelectFieldProps> = ({
                                     a.categoryName.localeCompare(b.categoryName)
                                 )
                                 .map((item) => (
-                                    <SelectItem key={item.id} value={item.id}>
+                                    <SelectItem
+                                        key={item.id}
+                                        value={
+                                            valueSource == "id"
+                                                ? item.id
+                                                : item.categoryName
+                                        }
+                                    >
                                         {item.categoryName}
                                     </SelectItem>
                                 ))

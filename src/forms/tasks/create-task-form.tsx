@@ -63,7 +63,7 @@ const CreateTaskForm = () => {
         }
     }, [createdTask?.id, isSuccess, router]);
 
-    const selectedFruit = watch("categoryId");
+    const selectedCategory = watch("categoryId");
     const isEmergency = watch("isEmergency");
 
     return (
@@ -98,7 +98,7 @@ const CreateTaskForm = () => {
                 placeholder="Select a category"
                 data={categories}
                 displayName="Category:"
-                value={selectedFruit}
+                value={selectedCategory}
                 onValueChange={(value) =>
                     setValue("categoryId", value, {
                         shouldValidate: true,

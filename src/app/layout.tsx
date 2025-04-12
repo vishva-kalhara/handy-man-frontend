@@ -25,7 +25,7 @@ export default function RootLayout({
             <body className={`${inter.variable} antialiased bg-[#f4f4f4]`}>
                 <Providers>
                     <Nav />
-                    <section className="min-h-[50dvh] md:py-8 lg:py-24 px-6 mb-6">
+                    <section className="min-h-[50dvh] md:py-8 xl:py-24 px-6 mb-6">
                         <div className="max-w-7xl mx-auto">{children}</div>
                     </section>
                     <Footer />
