@@ -10,7 +10,7 @@ const Page = () => {
     const task = tasks[0];
 
     return (
-        <div className="gap-6 flex flex-col sm:flex-row w-full md:max-w-5xl mx-auto">
+        <div className="gap-4 md:gap-6 flex flex-col sm:flex-row w-full md:max-w-5xl mx-auto">
             <div className="flex-1 flex flex-col  bg-white p-3 border border-black/15 rounded-2xl">
                 <div className="flex justify-between mb-3">
                     <Button variant={"light"}>
@@ -52,7 +52,7 @@ const Page = () => {
                     </p>
                 </div>
             </div>
-            <div className="sm:max-w-2/5 w-full flex flex-col gap-6">
+            <div className="sm:max-w-2/5 w-full flex flex-col gap-4 md:gap-6">
                 <div className="flex bg-white hover:cursor-pointer pt-16 pb-10 px-10 border-[1.5px] transition-all duration-300 border-black/15 hover:border-blue-600 rounded-xl relative flex-col">
                     <Link href={`/users/${task.creator.id}`}>
                         <div className="relative w-full flex justify-center">
