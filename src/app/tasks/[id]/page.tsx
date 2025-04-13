@@ -9,6 +9,7 @@ import BiddingCard from "../../../components/detailed-task/bidding-card";
 import RejectedBids from "../../../components/detailed-task/rejected-bids";
 import { useAuth } from "@/hooks/use-auth";
 import TaskOptions from "@/components/detailed-task/task-options";
+import OffersManagementCard from "@/components/detailed-task/offers-management";
 
 const Page = () => {
     const { id } = useParams<{ id: string }>();
@@ -38,18 +39,29 @@ const Page = () => {
     }
 
     return (
-        <div className="gap-4 md:gap-6 flex flex-col sm:flex-row w-full md:max-w-5xl mx-auto">
+        <div className="gap-4 md:gap-6 flex items-start flex-col sm:flex-row w-full md:max-w-5xl mx-auto">
             <DetailedTaskCard task={task} />
             <div className="sm:max-w-2/5 w-full flex flex-col gap-4 md:gap-6">
                 {user && task.creator.id == user.id ? (
-                    <TaskOptions taskId={task.id} />
+                    <>
+                        <TaskOptions taskId={task.id} />
+                        <OffersManagementCard
+                            bids={task.bids.filter(
+                                (bid) => bid.bidStatus == "PENDING"
+                            )}
+                        />
+                    </>
                 ) : (
                     <>
                         <QuickProfileCard user={task.creator} />
                         <BiddingCard taskId={task.id} />
                     </>
                 )}
-                <RejectedBids bids={task.bids} />
+                <RejectedBids
+                    bids={task.bids.filter(
+                        (bid) => bid.bidStatus == "REJECTED"
+                    )}
+                />
             </div>
         </div>
     );

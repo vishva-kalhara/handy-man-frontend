@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const DetailedTaskCard = ({ task }: { task: Task }) => {
     return (
-        <div className="flex-1 flex flex-col  bg-white p-3 border border-black/15 rounded-2xl">
+        <div className="w-full flex flex-col bg-white p-3 border border-black/15 rounded-2xl">
             <div className="flex justify-between mb-3">
                 <Button variant={"light"}>
                     <ArrowLeft size={5} /> Back
