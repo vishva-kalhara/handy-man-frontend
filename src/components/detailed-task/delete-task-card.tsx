@@ -1,17 +1,24 @@
 'use client";';
 import { useDeleteTaskMutation } from "@/redux/slices/tasks-api-slice";
-import FormButton from "../form-button";
 import { useRouter } from "next/navigation";
+import StageButton from "../stage-button";
+import { useState } from "react";
 
 const DeleteTaskCard = ({ taskId }: { taskId: string }) => {
-    const [deleteFn, { isLoading }] = useDeleteTaskMutation();
+    const [deleteFn] = useDeleteTaskMutation();
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
 
     const handleDelete = async () => {
         try {
+            setIsLoading(true);
             await deleteFn(taskId);
-            router.replace("/");
+            setTimeout(() => {
+                setIsLoading(false);
+                router.replace("/");
+            }, 1500);
         } catch (error) {
             console.error("Error deleting task:", error);
             window.location.reload();
@@ -27,13 +34,13 @@ const DeleteTaskCard = ({ taskId }: { taskId: string }) => {
                 This action cannot be undone. Once you delete this task, it will
                 be permanently removed from your list.
             </p>
-            <FormButton
+            <StageButton
+                handleSubmit={handleDelete}
                 isSubmitting={isLoading}
-                onClick={handleDelete}
                 className="bg-red-600 hover:bg-red-700"
             >
-                Confirm Delete
-            </FormButton>
+                Delete Task
+            </StageButton>
         </div>
     );
 };
