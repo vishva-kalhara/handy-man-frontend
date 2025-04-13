@@ -41,7 +41,11 @@ const DetailedTaskCard = ({ task }: { task: Task }) => {
                 </p>
                 <p className="mt-5">
                     <span className="font-bold text-3xl text-[#1e1e1e] ">
-                        LKR {task.maxPrice}
+                        {new Intl.NumberFormat("en-LK", {
+                            style: "currency",
+                            currency: "LKR",
+                            maximumFractionDigits: 0,
+                        }).format(task.maxPrice)}
                     </span>
                 </p>
             </div>

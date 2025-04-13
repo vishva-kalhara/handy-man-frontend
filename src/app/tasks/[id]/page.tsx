@@ -41,13 +41,13 @@ const Page = () => {
         <div className="gap-4 md:gap-6 flex flex-col sm:flex-row w-full md:max-w-5xl mx-auto">
             <DetailedTaskCard task={task} />
             <div className="sm:max-w-2/5 w-full flex flex-col gap-4 md:gap-6">
-                {user && task.creator.id !== user.id ? (
+                {user && task.creator.id == user.id ? (
+                    <TaskOptions taskId={task.id} />
+                ) : (
                     <>
                         <QuickProfileCard user={task.creator} />
                         <BiddingCard taskId={task.id} />
                     </>
-                ) : (
-                    <TaskOptions taskId={task.id} />
                 )}
                 <RejectedBids bids={task.bids} />
             </div>
