@@ -45,23 +45,31 @@ const Page = () => {
                 {user && task.creator.id == user.id ? (
                     <>
                         <TaskOptions taskId={task.id} />
-                        <OffersManagementCard
-                            bids={task.bids.filter(
-                                (bid) => bid.bidStatus == "PENDING"
-                            )}
-                        />
+
+                        {task.taskStatus == "PENDING" && (
+                            <OffersManagementCard
+                                bids={task.bids.filter(
+                                    (bid) => bid.bidStatus == "PENDING"
+                                )}
+                            />
+                        )}
                     </>
                 ) : (
                     <>
                         <QuickProfileCard user={task.creator} />
-                        <BiddingCard taskId={task.id} />
+                        <BiddingCard
+                            taskId={task.id}
+                            taskStatus={task.taskStatus}
+                        />
                     </>
                 )}
-                <RejectedBids
-                    bids={task.bids.filter(
-                        (bid) => bid.bidStatus == "REJECTED"
-                    )}
-                />
+                {task.taskStatus == "PENDING" && (
+                    <RejectedBids
+                        bids={task.bids.filter(
+                            (bid) => bid.bidStatus == "REJECTED"
+                        )}
+                    />
+                )}
             </div>
         </div>
     );

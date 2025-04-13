@@ -8,6 +8,7 @@ export type OfferAction = {
     action: "TO_BE_ACCEPTED" | "TO_BE_REJECTED";
     bidder: Pick<User, "id" | "profileImage" | "displayName" | "avgRating">;
     price: string;
+    bidId: string;
 };
 
 const OffersManagementCard = ({ bids }: { bids: Bid[] }) => {
@@ -18,6 +19,7 @@ const OffersManagementCard = ({ bids }: { bids: Bid[] }) => {
             <PendingOffersCard bids={bids} setAction={setAction} />
             {action != undefined && (
                 <OfferOptionsCard
+                    bidId={action.bidId}
                     action={action.action}
                     bidder={action.bidder}
                     price={action.price}

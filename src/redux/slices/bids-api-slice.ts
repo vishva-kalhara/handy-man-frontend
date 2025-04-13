@@ -24,8 +24,25 @@ export const bidsApiSlice = createApi({
                     invalidatesTags: ["Bids"],
                 }
             ),
+            updateBidStatus: builder.mutation<
+                Bid,
+                { bidId: string; bidStatus: "ACCEPTED" | "REJECTED" }
+            >({
+                query: ({ bidId, bidStatus }) => ({
+                    url: `/bids/${bidId}`,
+                    method: "PATCH",
+                    body: { bidStatus },
+                    headers: {
+                        Authorization: `Bearer ${
+                            localStorage.getItem("token") || ""
+                        }`,
+                    },
+                }),
+                invalidatesTags: ["Bids"],
+            }),
         };
     },
 });
 
-export const { useCreateBidMutation } = bidsApiSlice;
+export const { useCreateBidMutation, useUpdateBidStatusMutation } =
+    bidsApiSlice;

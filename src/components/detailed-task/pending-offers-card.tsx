@@ -71,6 +71,7 @@ const PendingOffersCard = ({ bids, setAction }: Props) => {
                                             currency: "LKR",
                                             maximumFractionDigits: 0,
                                         }).format(bid.price),
+                                        bidId: bid.id,
                                     })
                                 }
                             >
@@ -87,6 +88,7 @@ const PendingOffersCard = ({ bids, setAction }: Props) => {
                                             currency: "LKR",
                                             maximumFractionDigits: 0,
                                         }).format(bid.price),
+                                        bidId: bid.id,
                                     })
                                 }
                             >

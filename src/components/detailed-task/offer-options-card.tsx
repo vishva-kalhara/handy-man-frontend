@@ -6,24 +6,38 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useUpdateBidStatusMutation } from "@/redux/slices/bids-api-slice";
 
 type Props = {
     action: "TO_BE_ACCEPTED" | "TO_BE_REJECTED";
     bidder: Pick<User, "id" | "profileImage" | "displayName" | "avgRating">;
     price: string;
+    bidId: string;
 };
 
-const OfferOptionsCard = ({ action, bidder, price }: Props) => {
+const OfferOptionsCard = ({ action, bidder, price, bidId }: Props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const [updateFn] = useUpdateBidStatusMutation();
 
     const handleAction = async () => {
         try {
             setIsSubmitting(true);
-            setTimeout(() => {
-                setIsSubmitting(false);
-            }, 3000);
+
+            console.log("Bid ID:", bidId);
+            console.log(action);
+
+            await updateFn({
+                bidId,
+                bidStatus: action == "TO_BE_ACCEPTED" ? "ACCEPTED" : "REJECTED",
+            });
         } catch (error) {
             console.error(error);
+        } finally {
+            setTimeout(() => {
+                setIsSubmitting(false);
+                window.location.reload();
+            }, 3000);
         }
     };
 
