@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const TaskCard = ({ task }: { task: Task }) => {
     return (
-        <div className="p-2 border border-black/10 w-full bg-white rounded-xl">
-            <Link href={`/tasks/${task.id}`}>
+        <Link href={`/tasks/${task.id}`}>
+            <div className="p-2 border border-black/10 w-full bg-white rounded-xl">
                 <div className="relative w-full h-[300px] rounded-lg border-black/10 border overflow-hidden">
                     <Image
                         alt="img"
@@ -26,35 +26,18 @@ const TaskCard = ({ task }: { task: Task }) => {
                         </div>
                     )}
                 </div>
-            </Link>
-            <div className="flex gap-4 mt-4">
-                <Link href={`/users/${task.creator.id}`}>
-                    <div className="relative w-[56px] h-[56px]  border border-black/10 rounded-lg">
-                        {task.creator.profileImage ? (
-                            <Image
-                                alt="img"
-                                src={task.creator.profileImage}
-                                fill
-                                className="rounded-lg object-cover"
-                                sizes="100vw"
-                            />
-                        ) : (
-                            <div className="flex justify-center items-center w-full h-full bg-gray-200 rounded-lg">
-                                <span className="text-2xl font-bold text-gray-500">
-                                    {task.creator.displayName
-                                        .charAt(0)
-                                        .toUpperCase()}
-                                </span>
-                            </div>
-                        )}
-                    </div>
-                </Link>
-                <div className="flex flex-col">
-                    <h4 className="font-semibold text-base ">{task.title}</h4>
-                    <div className="flex gap-2 items-center">
-                        <h4 className="font-semibold text-xl text-[#454547] ">
-                            LKR {task.maxPrice}
-                        </h4>
+                <div className="flex flex-col p-4 gap-2">
+                    <h4 className="font-semibold text-base text-black/70 text-center">
+                        {task.title}
+                    </h4>
+                    <h4 className="font-semibold text-sm text-[#454547] text-center">
+                        {new Intl.NumberFormat("en-LK", {
+                            style: "currency",
+                            currency: "LKR",
+                            maximumFractionDigits: 0,
+                        }).format(task.maxPrice)}
+                    </h4>
+                    <div className="flex gap-2 items-center justify-center">
                         {task.isEmergency && (
                             <div className="py-0.5 px-1 bg-red-50 border border-red-200 rounded-full">
                                 <span>🔥</span>
@@ -68,7 +51,7 @@ const TaskCard = ({ task }: { task: Task }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 

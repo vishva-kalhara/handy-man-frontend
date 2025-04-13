@@ -1,16 +1,29 @@
+"use client";
 import FilterForm from "@/forms/tasks/filter-form";
-import TaskCard from "@/components/task-card";
-import { tasks } from "@/test-data/tasks";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import TasksContainer from "@/components/home/tasks-container";
 
 export default function Home() {
+    const router = useRouter();
+
+    useEffect(() => {
+        const filteredEntries = [
+            ["sortBy", "createdAt"],
+            ["sortDir", "desc"],
+        ];
+
+        const queryString = new URLSearchParams(
+            filteredEntries as [string, string][]
+        ).toString();
+
+        router.push(`?${queryString}`);
+    }, [router]);
+
     return (
         <>
             <FilterForm />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                {tasks.map((task) => (
-                    <TaskCard key={task.id} task={task} />
-                ))}
-            </div>
+            <TasksContainer />
         </>
     );
 }

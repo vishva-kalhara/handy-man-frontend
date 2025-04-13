@@ -10,6 +10,17 @@ export const taskApiSlice = createApi({
     }),
     endpoints: (builder) => {
         return {
+            getAllTasks: builder.query<Task[], string>({
+                query: (query) => {
+                    return {
+                        url: `/tasks?isDeleted=false&taskStatus=PENDING${
+                            query && `&${query}`
+                        }`,
+                        method: "GET",
+                    };
+                },
+                providesTags: ["tasks"],
+            }),
             createTask: builder.mutation<Task, CreateTaskFormData>({
                 query: (body) => {
                     const dataInText = {
@@ -67,4 +78,5 @@ export const {
     useCreateTaskMutation,
     useGetOneTaskQuery,
     useDeleteTaskMutation,
+    useGetAllTasksQuery,
 } = taskApiSlice;

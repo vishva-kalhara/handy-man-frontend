@@ -7,6 +7,8 @@ import SelectField from "@/components/select-field";
 import { useGetCategoriesQuery } from "@/redux/slices/categories-api-slice";
 import { Button } from "@/components/ui/button";
 import { FilterIcon } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const schema = z.object({
     minPrice: z.coerce
@@ -18,7 +20,7 @@ const schema = z.object({
         .min(0, "Maximum price must be greater than 0")
         .optional(),
     category: z.string().optional(),
-    taskType: z.string(),
+    isEmergency: z.string().optional(),
 });
 
 export type FilterTasksFormData = z.infer<typeof schema>;
@@ -32,16 +34,48 @@ const FilterForm = () => {
         formState: { errors },
     } = useForm<FilterTasksFormData>({
         resolver: zodResolver(schema),
-        defaultValues: {
-            taskType: "false",
-        },
+        defaultValues: {},
     });
 
     const { data: categories } = useGetCategoriesQuery();
 
-    const submitForm: SubmitHandler<FilterTasksFormData> = async (data) => {
-        console.log(data);
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const submitForm: SubmitHandler<FilterTasksFormData> = (data) => {
+        let filteredEntries = Object.entries(data).filter(
+            ([, value]) =>
+                value !== undefined &&
+                value !== "" &&
+                value !== null &&
+                value !== 0
+        );
+
+        filteredEntries = [
+            ...filteredEntries,
+            ["sortBy", "createdAt"],
+            ["sortDir", "desc"],
+        ];
+
+        const queryString = new URLSearchParams(
+            filteredEntries as [string, string][]
+        ).toString();
+
+        router.push(`?${queryString}`);
     };
+
+    useEffect(() => {
+        ["minPrice", "maxPrice", "category", "isEmergency"].forEach((key) => {
+            const value = searchParams.get(key);
+            if (value !== null) {
+                if (key === "minPrice" || key === "maxPrice") {
+                    setValue(key as keyof FilterTasksFormData, Number(value));
+                } else {
+                    setValue(key as keyof FilterTasksFormData, value);
+                }
+            }
+        });
+    }, [searchParams, setValue]);
 
     const taskTypes = [
         { id: "false", categoryName: "All" },
@@ -49,13 +83,14 @@ const FilterForm = () => {
     ];
 
     const selectedCategory = watch("category");
-    const selectedTaskType = watch("taskType");
+    const selectedTaskType = watch("isEmergency");
 
     return (
         <form onSubmit={handleSubmit(submitForm)}>
-            <div className="w-full rounded-xl bg-white border border-black/10 p-6 pb-0 mb-4 flex-col gap-4">
+            <div className="w-full rounded-xl bg-white border border-black/10 p-6 md:pb-0 mb-8 flex-col gap-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 ">
                     <InputField
+                        type="number"
                         displayName="Min Price:"
                         placeholder="Pice in LKR"
                         error={errors.minPrice?.message}
@@ -63,6 +98,7 @@ const FilterForm = () => {
                         name="minPrice"
                     />
                     <InputField
+                        type="number"
                         displayName="Max Price:"
                         placeholder="Pice in LKR"
                         error={errors.maxPrice?.message}
@@ -92,13 +128,13 @@ const FilterForm = () => {
                             displayName="Task Type:"
                             value={selectedTaskType}
                             onValueChange={(value) =>
-                                setValue("taskType", value, {
+                                setValue("isEmergency", value, {
                                     shouldValidate: true,
                                     shouldDirty: true,
                                     shouldTouch: true,
                                 })
                             }
-                            error={errors.taskType?.message}
+                            error={errors.isEmergency?.message}
                         />
                         <Button
                             type="submit"
