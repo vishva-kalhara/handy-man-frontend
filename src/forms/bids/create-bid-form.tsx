@@ -3,6 +3,7 @@ import FormButton from "@/components/form-button";
 import InputField from "@/components/input-field";
 import RootError from "@/components/root-error";
 import { useAuth } from "@/hooks/use-auth";
+import { useCreateBidMutation } from "@/redux/slices/bids-api-slice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -15,7 +16,7 @@ const schema = z.object({
 
 export type CreateBidFormData = z.infer<typeof schema>;
 
-const CreateBidForm = () => {
+const CreateBidForm = ({ taskId }: { taskId: string }) => {
     const { isLoggedIn } = useAuth();
 
     const {
@@ -23,6 +24,8 @@ const CreateBidForm = () => {
         formState: { errors, isSubmitting },
         handleSubmit,
     } = useForm<CreateBidFormData>({ resolver: zodResolver(schema) });
+
+    const [createFn, { data: resData, isLoading }] = useCreateBidMutation();
 
     if (!isLoggedIn) {
         return (
@@ -37,9 +40,18 @@ const CreateBidForm = () => {
     }
 
     const onFormSubmit: SubmitHandler<CreateBidFormData> = async (data) => {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        console.log(data);
-        // Invalidate the query key
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await createFn({
+                price: data.biddingPrice,
+                taskId: taskId,
+            });
+        } catch (error) {
+            console.error(error);
+        } finally {
+            console.log(resData);
+            if (!isLoading) window.location.reload();
+        }
     };
 
     return (

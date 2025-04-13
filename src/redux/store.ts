@@ -3,6 +3,7 @@ import { categoriesApiSlice } from "./slices/categories-api-slice";
 import { authApiSlice } from "./slices/auth-api-slice";
 import { userApiSlice } from "./slices/user-api-slice";
 import { taskApiSlice } from "./slices/tasks-api-slice";
+import { bidsApiSlice } from "./slices/bids-api-slice";
 
 export const store = configureStore({
     reducer: {
@@ -10,13 +11,15 @@ export const store = configureStore({
         [authApiSlice.reducerPath]: authApiSlice.reducer,
         [userApiSlice.reducerPath]: userApiSlice.reducer,
         [taskApiSlice.reducerPath]: taskApiSlice.reducer,
+        [bidsApiSlice.reducerPath]: bidsApiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
             .concat(categoriesApiSlice.middleware)
             .concat(authApiSlice.middleware)
             .concat(userApiSlice.middleware)
-            .concat(taskApiSlice.middleware);
+            .concat(taskApiSlice.middleware)
+            .concat(bidsApiSlice.middleware);
     },
 });
 
