@@ -46,7 +46,7 @@ const Page = () => {
                 {user && task.creator.id == user.id ? (
                     <>
                         {task.taskStatus == "WAITING_TO_COMPLETE" && (
-                            <CompleteTaskCard />
+                            <CompleteTaskCard taskId={id} />
                         )}
 
                         <TaskOptions taskId={task.id} />

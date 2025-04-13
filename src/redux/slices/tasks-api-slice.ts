@@ -56,6 +56,20 @@ export const taskApiSlice = createApi({
                     };
                 },
             }),
+            completeTask: builder.mutation<Task, string>({
+                query: (id) => {
+                    return {
+                        url: `/tasks/${id}/complete`,
+                        method: "PATCH",
+                        headers: {
+                            Authorization: `Bearer ${
+                                localStorage.getItem("token") || ""
+                            }`,
+                        },
+                    };
+                },
+                invalidatesTags: ["tasks"],
+            }),
             deleteTask: builder.mutation<void, string>({
                 query: (id) => {
                     return {
@@ -79,4 +93,5 @@ export const {
     useGetOneTaskQuery,
     useDeleteTaskMutation,
     useGetAllTasksQuery,
+    useCompleteTaskMutation,
 } = taskApiSlice;

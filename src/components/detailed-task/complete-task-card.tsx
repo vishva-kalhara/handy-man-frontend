@@ -1,15 +1,25 @@
+"use client";
 import { useState } from "react";
 import StageButton from "../stage-button";
+import { useCompleteTaskMutation } from "@/redux/slices/tasks-api-slice";
 
-const CompleteTaskCard = () => {
+const CompleteTaskCard = ({ taskId }: { taskId: string }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = () => {
-        setIsSubmitting(true);
-        setTimeout(() => {
-            setIsSubmitting(false);
-        }, 3000);
-        console.log("Task completed!");
+    const [completeFn] = useCompleteTaskMutation();
+
+    const handleSubmit = async () => {
+        try {
+            setIsSubmitting(true);
+            await completeFn(taskId);
+            setTimeout(() => {
+                setIsSubmitting(false);
+                window.location.reload();
+            }, 3000);
+            console.log("Task completed!");
+        } catch (error) {
+            console.error("Error completing task:", error);
+        }
     };
 
     return (
