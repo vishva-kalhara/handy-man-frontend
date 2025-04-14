@@ -12,6 +12,10 @@ export type Task = {
     taskStatus: "PENDING" | "WAITING_TO_COMPLETE" | "COMPLETED";
     createdAt: string;
     creator: Pick<User, "id" | "profileImage" | "displayName" | "avgRating">;
+    chosenBidder: Pick<
+        User,
+        "id" | "profileImage" | "displayName" | "avgRating"
+    >;
     category: Category;
     bids: Bid[];
 };

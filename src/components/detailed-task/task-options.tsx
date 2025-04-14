@@ -4,7 +4,9 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import DeleteTaskCard from "./delete-task-card";
 
-const TaskOptions = ({ taskId }: { taskId: string }) => {
+type Props = { taskId: string; isPending: boolean };
+
+const TaskOptions = ({ taskId, isPending }: Props) => {
     const [isDeletingCardVisible, setIsDeletingCardVisible] = useState(false);
 
     return (
@@ -14,6 +16,7 @@ const TaskOptions = ({ taskId }: { taskId: string }) => {
                     Your Task
                 </p>
                 <Button
+                    disabled={!isPending}
                     variant="destructive"
                     onClick={() => setIsDeletingCardVisible(true)}
                 >
