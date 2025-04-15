@@ -1,5 +1,6 @@
 import { Bid } from "./bid";
 import { Category } from "./category";
+import { Review } from "./review";
 import { User } from "./user";
 
 export type Task = {
@@ -15,7 +16,8 @@ export type Task = {
     chosenBidder: Pick<
         User,
         "id" | "profileImage" | "displayName" | "avgRating"
-    >;
+    > | null;
     category: Category;
     bids: Bid[];
+    reviews: Review[];
 };

@@ -6,6 +6,7 @@ export interface Review {
     ratedValue: number;
     reviewText: string;
     reviewedBy: User;
-    reviewedTo: User;
+    reviewGot: User;
     task: Task;
+    reviewGotAsRole: "HANDY_MAN" | "TASK_OWNER";
 }

@@ -13,6 +13,7 @@ import OffersManagementCard from "@/components/detailed-task/offers-management";
 import CompleteTaskCard from "@/components/detailed-task/complete-task-card";
 import ReviewCard from "@/components/detailed-task/review-card";
 import ChosenCard from "@/components/detailed-task/chosen-card";
+import ReviewDisplayCard from "@/components/detailed-task/review-display-card";
 
 const Page = () => {
     const { id } = useParams<{ id: string }>();
@@ -47,23 +48,67 @@ const Page = () => {
             <div className="sm:max-w-2/5 w-full flex flex-col gap-4 md:gap-6">
                 {task.taskStatus != "PENDING" &&
                     user &&
-                    task.chosenBidder.id == user.id && <ChosenCard />}
+                    task.chosenBidder?.id == user.id && <ChosenCard />}
+
                 {task.taskStatus == "COMPLETED" &&
                     user &&
-                    task.creator.id == user?.id && (
+                    task.creator.id == user?.id &&
+                    ((task.reviews &&
+                        task.reviews.filter((r) => r.reviewedBy.id == user.id)
+                            .length === 0) ||
+                        !task.reviews) && (
                         <ReviewCard
                             reviewType="TASK_OWNER"
-                            reviewedToId={task.chosenBidder.id}
+                            reviewedToId={task.chosenBidder?.id || ""}
                             taskId={id}
                         />
                     )}
                 {task.taskStatus == "COMPLETED" &&
                     user &&
-                    task.chosenBidder.id == user?.id && (
+                    task.creator.id == user.id &&
+                    task.reviews &&
+                    task.reviews.filter(
+                        (r) => r.reviewGot.id == user.id
+                    )[0] && (
+                        <ReviewDisplayCard
+                            review={
+                                task.reviews &&
+                                user &&
+                                task.reviews.filter(
+                                    (r) => r.reviewGot.id == user.id
+                                )[0]
+                            }
+                        />
+                    )}
+
+                {task.taskStatus == "COMPLETED" &&
+                    user &&
+                    task.chosenBidder?.id == user.id &&
+                    ((task.reviews &&
+                        task.reviews.filter((r) => r.reviewedBy.id == user.id)
+                            .length === 0) ||
+                        !task.reviews) && (
                         <ReviewCard
                             reviewType="HANDY_MAN"
                             reviewedToId={task.creator.id}
                             taskId={id}
+                        />
+                    )}
+                {task.taskStatus == "COMPLETED" &&
+                    user &&
+                    task.chosenBidder?.id == user.id &&
+                    task.reviews &&
+                    task.reviews.filter(
+                        (r) => r.reviewGot.id == user.id
+                    )[0] && (
+                        <ReviewDisplayCard
+                            review={
+                                task.reviews &&
+                                user &&
+                                task.reviews.filter(
+                                    (r) => r.reviewGot.id == user.id
+                                )[0]
+                            }
                         />
                     )}
 
@@ -85,7 +130,7 @@ const Page = () => {
                         )}
                     </>
                 ) : (
-                    (!user || task.chosenBidder.id != user.id) && (
+                    (!user || task.chosenBidder?.id != user.id) && (
                         <>
                             <QuickProfileCard user={task.creator} />
                             <BiddingCard
