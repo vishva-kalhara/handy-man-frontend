@@ -1,6 +1,6 @@
 "use client";
 import FilterForm from "@/forms/tasks/filter-form";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import TasksContainer from "@/components/home/tasks-container";
 
@@ -21,9 +21,11 @@ export default function Home() {
     }, [router]);
 
     return (
-        <>
-            <FilterForm />
-            <TasksContainer />
-        </>
+        <Suspense fallback={<div className="my-36 mx-auto">Loading...</div>}>
+            <>
+                <FilterForm />
+                <TasksContainer />
+            </>
+        </Suspense>
     );
 }

@@ -8,7 +8,7 @@ import { Category } from "@/types/category";
 import { useEffect } from "react";
 
 const Page = () => {
-    const { data: categories } = useGetCategoriesQuery(null);
+    const { data: categories } = useGetCategoriesQuery();
 
     const [createCategory, { data, isError }] = useCreateCategoryMutation();
 
