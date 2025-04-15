@@ -33,25 +33,25 @@ const ManagePollingCard = () => {
                 </p>
             </div>
             <div className="flex gap-2">
-                <Button
-                    className="bg-white/20 text-white border border-white/30 size-8"
-                    onClick={async () => {
-                        setIsRefetching(true);
-                        await refetch();
-                        setTimeout(() => {
-                            setIsRefetching(false);
-                        }, 1000);
-                    }}
-                >
-                    {!isPolling && (
+                {!isPolling && (
+                    <Button
+                        className="bg-white/20 text-white border border-white/30 size-8"
+                        onClick={async () => {
+                            setIsRefetching(true);
+                            await refetch();
+                            setTimeout(() => {
+                                setIsRefetching(false);
+                            }, 1000);
+                        }}
+                    >
                         <RefreshCw
                             className={cn(
                                 "size-4",
                                 isRefetching && "animate-spin"
                             )}
                         />
-                    )}
-                </Button>
+                    </Button>
+                )}
                 <Button
                     size="sm"
                     className="bg-white/20 text-white border border-white/30"
