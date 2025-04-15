@@ -3,6 +3,7 @@ import FormButton from "@/components/form-button";
 import FormStarRating from "@/components/form-elements/form-star-rating";
 import InputField from "@/components/input-field";
 import RootError from "@/components/root-error";
+import { useTask } from "@/contexts/detailed-tsx-context";
 import { useAddReviewMutation } from "@/redux/slices/review-api-slice";
 import { ApiErrorResponse } from "@/types/api-error-reponse";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,7 +36,9 @@ type Props = {
 const AddReviewForm = ({ reviewedToId, taskId }: Props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const [addReviewFn, { isSuccess, isError, error }] = useAddReviewMutation();
+    const { refetch } = useTask();
+
+    const [addReviewFn, { isError, error }] = useAddReviewMutation();
 
     const {
         handleSubmit,
@@ -57,10 +60,6 @@ const AddReviewForm = ({ reviewedToId, taskId }: Props) => {
     const currentRating = watch("ratedValue");
 
     useEffect(() => {
-        if (isSuccess) window.location.reload();
-    }, [isSuccess]);
-
-    useEffect(() => {
         if (isError) {
             const err = error as ApiErrorResponse;
             setError("root", {
@@ -74,8 +73,9 @@ const AddReviewForm = ({ reviewedToId, taskId }: Props) => {
         try {
             setIsSubmitting(true);
             await addReviewFn(data);
-            setTimeout(() => {
+            setTimeout(async () => {
                 setIsSubmitting(false);
+                await refetch();
             }, 1500);
         } catch (error) {
             console.error("Unexpected error in mutation:", error);

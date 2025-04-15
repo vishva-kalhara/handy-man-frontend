@@ -134,6 +134,24 @@ const Page = () => {
                             />
                         )}
 
+                    {task.taskStatus == "COMPLETED" &&
+                        user &&
+                        task.reviews &&
+                        task.reviews.filter(
+                            (t) => t.reviewedBy.id == user.id
+                        )[0] && (
+                            <ReviewDisplayCard
+                                ReviewIDid
+                                review={
+                                    task.reviews &&
+                                    user &&
+                                    task.reviews.filter(
+                                        (r) => r.reviewedBy.id == user.id
+                                    )[0]
+                                }
+                            />
+                        )}
+
                     {user && task.creator.id == user.id ? (
                         <>
                             {task.taskStatus == "WAITING_TO_COMPLETE" && (
