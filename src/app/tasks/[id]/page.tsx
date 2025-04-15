@@ -14,19 +14,35 @@ import CompleteTaskCard from "@/components/detailed-task/complete-task-card";
 import ReviewCard from "@/components/detailed-task/review-card";
 import ChosenCard from "@/components/detailed-task/chosen-card";
 import ReviewDisplayCard from "@/components/detailed-task/review-display-card";
+import { useEffect, useState } from "react";
+import { Task } from "@/types/task";
+import { DetailedTaskContext } from "@/contexts/detailed-tsx-context";
+import ManagePollingCard from "@/components/detailed-task/manage-polling-card";
 
 const Page = () => {
     const { id } = useParams<{ id: string }>();
 
     const { user } = useAuth();
 
-    const { data: task, isLoading, isError } = useGetOneTaskQuery(id);
+    const [task, setTask] = useState<Task | undefined>(undefined);
+    const [isPolling, setIsPolling] = useState(false);
+
+    const { data, isLoading, isError, refetch } = useGetOneTaskQuery(id, {
+        pollingInterval: isPolling ? 5000 : 0,
+        refetchOnMountOrArgChange: true,
+    });
+
+    useEffect(() => {
+        if (data) {
+            setTask(data);
+        }
+    }, [data]);
 
     if (isLoading) {
         return <PageLoadingCard />;
     }
 
-    if (isError || !task) {
+    if (isError || !data || !task) {
         return (
             <PageMessage
                 tag="Not Found"
@@ -43,112 +59,119 @@ const Page = () => {
     }
 
     return (
-        <div className="gap-4 md:gap-6 flex items-start flex-col sm:flex-row w-full md:max-w-5xl mx-auto">
-            <DetailedTaskCard task={task} />
-            <div className="sm:max-w-2/5 w-full flex flex-col gap-4 md:gap-6">
-                {task.taskStatus != "PENDING" &&
-                    user &&
-                    task.chosenBidder?.id == user.id && <ChosenCard />}
+        <DetailedTaskContext.Provider
+            value={{ task, refetch, polling: { isPolling, setIsPolling } }}
+        >
+            <div className="gap-4 md:gap-6 flex items-start flex-col sm:flex-row w-full md:max-w-5xl mx-auto">
+                <DetailedTaskCard task={task} />
+                <div className="sm:max-w-2/5 w-full flex flex-col gap-4 md:gap-6">
+                    <ManagePollingCard />
+                    {task.taskStatus != "PENDING" &&
+                        user &&
+                        task.chosenBidder?.id == user.id && <ChosenCard />}
 
-                {task.taskStatus == "COMPLETED" &&
-                    user &&
-                    task.creator.id == user?.id &&
-                    ((task.reviews &&
-                        task.reviews.filter((r) => r.reviewedBy.id == user.id)
-                            .length === 0) ||
-                        !task.reviews) && (
-                        <ReviewCard
-                            reviewType="TASK_OWNER"
-                            reviewedToId={task.chosenBidder?.id || ""}
-                            taskId={id}
-                        />
-                    )}
-                {task.taskStatus == "COMPLETED" &&
-                    user &&
-                    task.creator.id == user.id &&
-                    task.reviews &&
-                    task.reviews.filter(
-                        (r) => r.reviewGot.id == user.id
-                    )[0] && (
-                        <ReviewDisplayCard
-                            review={
-                                task.reviews &&
-                                user &&
-                                task.reviews.filter(
-                                    (r) => r.reviewGot.id == user.id
-                                )[0]
-                            }
-                        />
-                    )}
-
-                {task.taskStatus == "COMPLETED" &&
-                    user &&
-                    task.chosenBidder?.id == user.id &&
-                    ((task.reviews &&
-                        task.reviews.filter((r) => r.reviewedBy.id == user.id)
-                            .length === 0) ||
-                        !task.reviews) && (
-                        <ReviewCard
-                            reviewType="HANDY_MAN"
-                            reviewedToId={task.creator.id}
-                            taskId={id}
-                        />
-                    )}
-                {task.taskStatus == "COMPLETED" &&
-                    user &&
-                    task.chosenBidder?.id == user.id &&
-                    task.reviews &&
-                    task.reviews.filter(
-                        (r) => r.reviewGot.id == user.id
-                    )[0] && (
-                        <ReviewDisplayCard
-                            review={
-                                task.reviews &&
-                                user &&
-                                task.reviews.filter(
-                                    (r) => r.reviewGot.id == user.id
-                                )[0]
-                            }
-                        />
-                    )}
-
-                {user && task.creator.id == user.id ? (
-                    <>
-                        {task.taskStatus == "WAITING_TO_COMPLETE" && (
-                            <CompleteTaskCard taskId={id} />
-                        )}
-                        <TaskOptions
-                            taskId={task.id}
-                            isPending={task.taskStatus == "PENDING"}
-                        />
-                        {task.taskStatus == "PENDING" && (
-                            <OffersManagementCard
-                                bids={task.bids.filter(
-                                    (bid) => bid.bidStatus == "PENDING"
-                                )}
+                    {task.taskStatus == "COMPLETED" &&
+                        user &&
+                        task.creator.id == user?.id &&
+                        ((task.reviews &&
+                            task.reviews.filter(
+                                (r) => r.reviewedBy.id == user.id
+                            ).length === 0) ||
+                            !task.reviews) && (
+                            <ReviewCard
+                                reviewType="TASK_OWNER"
+                                reviewedToId={task.chosenBidder?.id || ""}
+                                taskId={id}
                             />
                         )}
-                    </>
-                ) : (
-                    (!user || task.chosenBidder?.id != user.id) && (
+                    {task.taskStatus == "COMPLETED" &&
+                        user &&
+                        task.creator.id == user.id &&
+                        task.reviews &&
+                        task.reviews.filter(
+                            (r) => r.reviewGot.id == user.id
+                        )[0] && (
+                            <ReviewDisplayCard
+                                review={
+                                    task.reviews &&
+                                    user &&
+                                    task.reviews.filter(
+                                        (r) => r.reviewGot.id == user.id
+                                    )[0]
+                                }
+                            />
+                        )}
+
+                    {task.taskStatus == "COMPLETED" &&
+                        user &&
+                        task.chosenBidder?.id == user.id &&
+                        ((task.reviews &&
+                            task.reviews.filter(
+                                (r) => r.reviewedBy.id == user.id
+                            ).length === 0) ||
+                            !task.reviews) && (
+                            <ReviewCard
+                                reviewType="HANDY_MAN"
+                                reviewedToId={task.creator.id}
+                                taskId={id}
+                            />
+                        )}
+                    {task.taskStatus == "COMPLETED" &&
+                        user &&
+                        task.chosenBidder?.id == user.id &&
+                        task.reviews &&
+                        task.reviews.filter(
+                            (r) => r.reviewGot.id == user.id
+                        )[0] && (
+                            <ReviewDisplayCard
+                                review={
+                                    task.reviews &&
+                                    user &&
+                                    task.reviews.filter(
+                                        (r) => r.reviewGot.id == user.id
+                                    )[0]
+                                }
+                            />
+                        )}
+
+                    {user && task.creator.id == user.id ? (
                         <>
-                            <QuickProfileCard user={task.creator} />
-                            <BiddingCard
+                            {task.taskStatus == "WAITING_TO_COMPLETE" && (
+                                <CompleteTaskCard taskId={id} />
+                            )}
+                            <TaskOptions
                                 taskId={task.id}
-                                taskStatus={task.taskStatus}
+                                isPending={task.taskStatus == "PENDING"}
                             />
+                            {task.taskStatus == "PENDING" && (
+                                <OffersManagementCard
+                                    bids={task.bids.filter(
+                                        (bid) => bid.bidStatus == "PENDING"
+                                    )}
+                                />
+                            )}
                         </>
-                    )
-                )}
-                {task.taskStatus == "PENDING" && (
-                    <RejectedBids
-                        bids={task.bids.filter(
-                            (bid) => bid.bidStatus == "REJECTED"
-                        )}
-                    />
-                )}
+                    ) : (
+                        (!user || task.chosenBidder?.id != user.id) && (
+                            <>
+                                <QuickProfileCard user={task.creator} />
+                                <BiddingCard
+                                    taskId={task.id}
+                                    taskStatus={task.taskStatus}
+                                />
+                            </>
+                        )
+                    )}
+                    {task.taskStatus == "PENDING" && (
+                        <RejectedBids
+                            bids={task.bids.filter(
+                                (bid) => bid.bidStatus != "ACCEPTED"
+                            )}
+                        />
+                    )}
+                </div>
             </div>
-        </div>
+        </DetailedTaskContext.Provider>
     );
 };
 

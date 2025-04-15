@@ -19,6 +19,7 @@ const OffersManagementCard = ({ bids }: { bids: Bid[] }) => {
             <PendingOffersCard bids={bids} setAction={setAction} />
             {action != undefined && (
                 <OfferOptionsCard
+                    setAction={setAction}
                     bidId={action.bidId}
                     action={action.action}
                     bidder={action.bidder}

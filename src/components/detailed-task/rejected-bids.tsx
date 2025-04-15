@@ -1,5 +1,5 @@
 import { Bid } from "@/types/bid";
-import { CircleX } from "lucide-react";
+import BidDetails from "./bid-details";
 
 const RejectedBids = ({ bids }: { bids: Bid[] }) => {
     return (
@@ -14,21 +14,13 @@ const RejectedBids = ({ bids }: { bids: Bid[] }) => {
                     No Previous Offers!
                 </p>
             ) : (
-                bids.map((bid) => (
-                    <div
-                        key={"bid" + bid.id}
-                        className="w-full py-2 flex gap-2 items-center"
-                    >
-                        <CircleX
-                            fill="oklch(70.4% 0.191 22.216)"
-                            stroke="white"
-                            className="size-8"
-                        />
-                        <span className="text-base text-black/60 font-medium">
-                            Rejected (LKR {bid.price})
-                        </span>
-                    </div>
-                ))
+                bids
+                    .sort(
+                        (a, b) =>
+                            new Date(b.createdAt).getTime() -
+                            new Date(a.createdAt).getTime()
+                    )
+                    .map((bid) => <BidDetails bid={bid} key={bid.id} />)
             )}
         </div>
     );

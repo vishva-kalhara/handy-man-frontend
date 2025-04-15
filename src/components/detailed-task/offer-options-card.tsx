@@ -5,18 +5,29 @@ import { User } from "@/types/user";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useUpdateBidStatusMutation } from "@/redux/slices/bids-api-slice";
+import { useTask } from "@/contexts/detailed-tsx-context";
+import { OfferAction } from "./offers-management";
 
 type Props = {
     action: "TO_BE_ACCEPTED" | "TO_BE_REJECTED";
     bidder: Pick<User, "id" | "profileImage" | "displayName" | "avgRating">;
     price: string;
     bidId: string;
+    setAction: Dispatch<SetStateAction<OfferAction | undefined>>;
 };
 
-const OfferOptionsCard = ({ action, bidder, price, bidId }: Props) => {
+const OfferOptionsCard = ({
+    action,
+    bidder,
+    price,
+    bidId,
+    setAction,
+}: Props) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { refetch } = useTask();
 
     const [updateFn] = useUpdateBidStatusMutation();
 
@@ -34,9 +45,11 @@ const OfferOptionsCard = ({ action, bidder, price, bidId }: Props) => {
         } catch (error) {
             console.error(error);
         } finally {
-            setTimeout(() => {
+            setTimeout(async () => {
                 setIsSubmitting(false);
-                window.location.reload();
+                await refetch();
+                setAction(undefined);
+                // window.location.reload();
             }, 3000);
         }
     };

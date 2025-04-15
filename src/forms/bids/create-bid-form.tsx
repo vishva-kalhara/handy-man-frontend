@@ -9,6 +9,17 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { Task } from "@/types/task";
+import {
+    BaseQueryFn,
+    FetchArgs,
+    FetchBaseQueryError,
+    FetchBaseQueryMeta,
+} from "@reduxjs/toolkit/query";
+import {
+    QueryActionCreatorResult,
+    QueryDefinition,
+} from "@reduxjs/toolkit/query";
 
 const schema = z.object({
     biddingPrice: z.coerce.number().min(0.1, "Bidding Price is required!"),
@@ -16,7 +27,26 @@ const schema = z.object({
 
 export type CreateBidFormData = z.infer<typeof schema>;
 
-const CreateBidForm = ({ taskId }: { taskId: string }) => {
+type Props = {
+    taskId: string;
+    refetch: () => QueryActionCreatorResult<
+        QueryDefinition<
+            string,
+            BaseQueryFn<
+                string | FetchArgs,
+                unknown,
+                FetchBaseQueryError,
+                object,
+                FetchBaseQueryMeta
+            >,
+            "tasks",
+            Task,
+            "tasks"
+        >
+    >;
+};
+
+const CreateBidForm = ({ taskId, refetch }: Props) => {
     const { isLoggedIn } = useAuth();
 
     const {
@@ -50,7 +80,9 @@ const CreateBidForm = ({ taskId }: { taskId: string }) => {
             console.error(error);
         } finally {
             console.log(resData);
-            if (!isLoading) window.location.reload();
+            if (!isLoading) {
+                await refetch();
+            }
         }
     };
 
