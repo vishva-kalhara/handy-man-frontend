@@ -2,9 +2,10 @@
 import Link from "next/link";
 import BlackLogo from "./assets/BlackLogo";
 import { Button } from "./ui/button";
-import { Bell, Plus, UserRound } from "lucide-react";
+import { Plus, UserRound } from "lucide-react";
 import Spinner from "./spinner";
 import { useAuth } from "@/hooks/use-auth";
+import NotificationModal from "./notifications-modal";
 
 const NotLoggedInButtons = () => {
     return (
@@ -30,11 +31,7 @@ const LoggedInButtons = () => {
                     <UserRound size={5} />
                 </Button>
             </Link>
-            <Link href={"/notifications"} className="flex focus:outline-0">
-                <Button variant={"dark"}>
-                    <Bell size={5} />
-                </Button>
-            </Link>
+            <NotificationModal />
             <Link href={"/tasks/new-task"} className="ms-4 focus:outline-0">
                 <Button variant={"white"} className="gap-2">
                     <Plus size={5} />
