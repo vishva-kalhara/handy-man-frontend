@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import Spinner from "../spinner";
 import { Button } from "../ui/button";
 import { useTask } from "@/contexts/detailed-tsx-context";
 import { RefreshCw, RefreshCwOff } from "lucide-react";
@@ -21,9 +20,9 @@ const ManagePollingCard = () => {
         >
             <div className="flex gap-2 items-center">
                 {isPolling ? (
-                    <Spinner variant="white" />
+                    // <Spinner variant="white" />
+                    <div className="bg-white size-3 rounded-full mx-1 animate-pulse" />
                 ) : (
-                    // <div className="bg-white size-3 rounded-full mx-1 animate-pulse" />
                     <RefreshCwOff className="size-4" />
                 )}
                 <p className="text-sm font-semibold ml-0.5">
