@@ -1,4 +1,4 @@
-import { useTask } from "@/contexts/detailed-tsx-context";
+import { useTask } from "@/contexts/detailed-task-context";
 import CreateBidForm from "@/forms/bids/create-bid-form";
 import { useAuth } from "@/hooks/use-auth";
 

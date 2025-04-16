@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { useTask } from "@/contexts/detailed-tsx-context";
+import { useTask } from "@/contexts/detailed-task-context";
 import { RefreshCw, RefreshCwOff } from "lucide-react";
 import { useState } from "react";
 

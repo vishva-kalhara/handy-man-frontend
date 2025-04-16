@@ -5,6 +5,7 @@ import { userApiSlice } from "./slices/user-api-slice";
 import { taskApiSlice } from "./slices/tasks-api-slice";
 import { bidsApiSlice } from "./slices/bids-api-slice";
 import { reviewApiSlice } from "./slices/review-api-slice";
+import { notificationApiSlice } from "./slices/notification-api-slice";
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         [taskApiSlice.reducerPath]: taskApiSlice.reducer,
         [bidsApiSlice.reducerPath]: bidsApiSlice.reducer,
         [reviewApiSlice.reducerPath]: reviewApiSlice.reducer,
+        [notificationApiSlice.reducerPath]: notificationApiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware()
@@ -22,7 +24,8 @@ export const store = configureStore({
             .concat(userApiSlice.middleware)
             .concat(taskApiSlice.middleware)
             .concat(bidsApiSlice.middleware)
-            .concat(reviewApiSlice.middleware);
+            .concat(reviewApiSlice.middleware)
+            .concat(notificationApiSlice.middleware);
     },
 });
 

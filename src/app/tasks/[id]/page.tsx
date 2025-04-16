@@ -16,7 +16,7 @@ import ChosenCard from "@/components/detailed-task/chosen-card";
 import ReviewDisplayCard from "@/components/detailed-task/review-display-card";
 import { useEffect, useState } from "react";
 import { Task } from "@/types/task";
-import { DetailedTaskContext } from "@/contexts/detailed-tsx-context";
+import { DetailedTaskContext } from "@/contexts/detailed-task-context";
 import ManagePollingCard from "@/components/detailed-task/manage-polling-card";
 
 const Page = () => {

@@ -7,7 +7,7 @@ import { Star } from "lucide-react";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useUpdateBidStatusMutation } from "@/redux/slices/bids-api-slice";
-import { useTask } from "@/contexts/detailed-tsx-context";
+import { useTask } from "@/contexts/detailed-task-context";
 import { OfferAction } from "./offers-management";
 
 type Props = {

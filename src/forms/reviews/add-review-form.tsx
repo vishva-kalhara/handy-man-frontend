@@ -3,7 +3,7 @@ import FormButton from "@/components/form-button";
 import FormStarRating from "@/components/form-elements/form-star-rating";
 import InputField from "@/components/input-field";
 import RootError from "@/components/root-error";
-import { useTask } from "@/contexts/detailed-tsx-context";
+import { useTask } from "@/contexts/detailed-task-context";
 import { useAddReviewMutation } from "@/redux/slices/review-api-slice";
 import { ApiErrorResponse } from "@/types/api-error-reponse";
 import { zodResolver } from "@hookform/resolvers/zod";
