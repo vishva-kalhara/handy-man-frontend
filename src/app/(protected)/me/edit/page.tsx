@@ -1,5 +1,15 @@
+import Card from "@/components/card";
+import UpdateMyBioForm from "@/forms/users/update-my-bio-form";
+
 const Page = () => {
-    return <h1>update</h1>;
+    return (
+        <Card
+            heading="Edit Profile"
+            description="Update your profile information."
+        >
+            <UpdateMyBioForm />
+        </Card>
+    );
 };
 
 export default Page;

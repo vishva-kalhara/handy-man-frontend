@@ -21,20 +21,20 @@ export const userApiSlice = createApi({
                 }),
                 providesTags: ["users"],
             }),
-            // getMe: builder.query<User | null, null>({
-            //     query: () => ({
-            //         url: "/users/me",
-            //         method: "GET",
-            //         headers: {
-            //             Authorization: `Bearer ${
-            //                 localStorage.getItem("token") || ""
-            //             }`,
-            //         },
-            //     }),
-            //     providesTags: ["me"],
-            // }),
+            updateMyBio: builder.mutation<null, string>({
+                query: (bio) => ({
+                    url: `/users/me/bio`,
+                    method: "PATCH",
+                    body: { bio },
+                    headers: {
+                        Authorization: `Bearer ${
+                            localStorage.getItem("token") || ""
+                        }`,
+                    },
+                }),
+            }),
         };
     },
 });
 
-export const { useGetUserQuery } = userApiSlice;
+export const { useGetUserQuery, useUpdateMyBioMutation } = userApiSlice;

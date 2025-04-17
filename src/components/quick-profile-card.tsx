@@ -51,9 +51,20 @@ const QuickProfileCard = ({
                     {user.displayName}
                 </h4>
             </Link>
-            <Button variant={"light"} className="absolute top-4 right-4">
-                <MessageSquare fill="#454545" size={5} /> Message
-            </Button>
+            {isMe ? (
+                <Link href={"/me/edit"}>
+                    <Button
+                        variant={"light"}
+                        className="absolute top-4 right-4"
+                    >
+                        Edit Profile
+                    </Button>
+                </Link>
+            ) : (
+                <Button variant={"light"} className="absolute top-4 right-4">
+                    <MessageSquare fill="#454545" size={5} /> Message
+                </Button>
+            )}
         </div>
     );
 };
