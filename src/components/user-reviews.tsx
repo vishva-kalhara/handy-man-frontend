@@ -2,7 +2,11 @@ import ReviewDisplayCard from "./detailed-task/review-display-card";
 import { useGetUserReviewsQuery } from "@/redux/slices/review-api-slice";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { RefreshCw } from "lucide-react";
+import {
+    ArrowDownWideNarrow,
+    ArrowUpNarrowWide,
+    RefreshCw,
+} from "lucide-react";
 
 type Props = {
     userId: string;
@@ -37,7 +41,7 @@ const UserReviews = ({ userId }: Props) => {
     };
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return <p className="text-center">Loading...</p>;
     }
 
     if (!isLoading && reviews && reviews.length === 0) {
@@ -70,10 +74,15 @@ const UserReviews = ({ userId }: Props) => {
                     variant={"outline"}
                     onClick={() => setIsDesc(!isDesc)}
                 >
-                    Sort by rating {isDesc ? "High to Low" : "Low to High"}
+                    Sort by rating{" "}
+                    {isDesc ? (
+                        <ArrowDownWideNarrow className="size-4" />
+                    ) : (
+                        <ArrowUpNarrowWide className="size-4" />
+                    )}
                 </Button>
             </div>
-            <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                 {reviews &&
                     reviews.map((r) => (
                         <ReviewDisplayCard review={r} key={r.id} />

@@ -42,22 +42,23 @@ const DetailedUserBase = ({ userId, isLoggedInUser }: Props) => {
     return (
         <div className="gap-4 md:gap-6 flex items-start flex-col sm:flex-row w-full md:max-w-5xl mx-auto">
             <div className="sm:max-w-2/5 w-full flex flex-col gap-4">
-                <QuickProfileCard user={user} />
+                <QuickProfileCard user={user} isMe={isLoggedInUser} />
                 {isLoggedInUser && (
-                    <>
+                    <div className="flex flex-col-reverse md:flex-col gap-4 w-full ">
                         <Button
+                            variant={"outline"}
                             onClick={() =>
                                 setSection(
                                     section == "REVIEWS" ? "TASKS" : "REVIEWS"
                                 )
                             }
-                            className="h-12"
+                            className="h-12 bg-white!  "
                         >
                             View My {section == "REVIEWS" ? "Tasks" : "Reviews"}{" "}
                             <ArrowRight className="size-4" />
                         </Button>
                         <SignOutButton />
-                    </>
+                    </div>
                 )}
             </div>
             <div className="w-full flex flex-col gap-4 md:gap-6">
