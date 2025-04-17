@@ -1,17 +1,19 @@
 import { MessageSquare, Star } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { User } from "@/types/user";
 
 const QuickProfileCard = ({
     user,
+    isMe = false,
 }: {
     user: Pick<User, "id" | "profileImage" | "displayName" | "avgRating">;
+    isMe?: boolean;
 }) => {
     return (
         <div className="flex bg-white hover:cursor-pointer pt-16 pb-10 px-10 border-[1.5px] transition-all duration-300 border-black/15 hover:border-blue-600 rounded-xl relative flex-col">
-            <Link href={`/users/${user.id}`}>
+            <Link href={isMe ? `/users/${user.id}` : "/me"}>
                 <div className="relative w-full flex justify-center">
                     <div className="relative w-[150px] h-[150px] rounded-full border-black/10 border-2">
                         {user.profileImage ? (

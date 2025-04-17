@@ -22,7 +22,17 @@ export const reviewApiSlice = createApi({
             }),
             invalidatesTags: ["reviews"],
         }),
+        getUserReviews: builder.query<
+            Review[],
+            { userId: string; isDesc: boolean }
+        >({
+            query: ({ userId, isDesc = true }) => ({
+                url: `/reviews/user/${userId}?isDesc=${isDesc}`,
+                method: "GET",
+            }),
+            providesTags: ["reviews"],
+        }),
     }),
 });
 
-export const { useAddReviewMutation } = reviewApiSlice;
+export const { useAddReviewMutation, useGetUserReviewsQuery } = reviewApiSlice;

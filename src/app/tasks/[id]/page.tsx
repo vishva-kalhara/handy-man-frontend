@@ -4,7 +4,7 @@ import PageMessage from "@/components/page-message";
 import { useGetOneTaskQuery } from "@/redux/slices/tasks-api-slice";
 import { useParams } from "next/navigation";
 import DetailedTaskCard from "../../../components/detailed-task/detailed-task-card";
-import QuickProfileCard from "@/components/detailed-task/quick-profile-card";
+import QuickProfileCard from "@/components/quick-profile-card";
 import BiddingCard from "../../../components/detailed-task/bidding-card";
 import RejectedBids from "../../../components/detailed-task/rejected-bids";
 import { useAuth } from "@/hooks/use-auth";

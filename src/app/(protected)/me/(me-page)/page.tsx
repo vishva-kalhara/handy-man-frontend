@@ -1,34 +1,11 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import {
-    useCreateCategoryMutation,
-    useGetCategoriesQuery,
-} from "@/redux/slices/categories-api-slice";
-import { Category } from "@/types/category";
-import { useEffect } from "react";
+import DetailedUserBase from "@/components/detailed-user/detailed-user-base";
+import { useAuth } from "@/hooks/use-auth";
 
 const Page = () => {
-    const { data: categories } = useGetCategoriesQuery();
+    const { user } = useAuth();
 
-    const [createCategory, { data, isError }] = useCreateCategoryMutation();
-
-    useEffect(() => {
-        console.log(data);
-    }, [data, isError]);
-
-    return (
-        <div>
-            {categories?.map((cat: Category) => (
-                <Button key={cat.id}>{cat.categoryName}</Button>
-            ))}
-            <Button
-                onClick={() => createCategory({ categoryName: "Gardening" })}
-                variant={"outline"}
-            >
-                Create
-            </Button>
-        </div>
-    );
+    return <DetailedUserBase isLoggedInUser={true} userId={user!.id} />;
 };
 
 export default Page;

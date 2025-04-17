@@ -8,5 +8,6 @@ export interface Review {
     reviewedBy: User;
     reviewGot: User;
     task: Task;
+    reviewedAt: Date;
     reviewGotAsRole: "HANDY_MAN" | "TASK_OWNER";
 }
