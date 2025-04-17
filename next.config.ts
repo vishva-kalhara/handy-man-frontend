@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
                 protocol: "https",
                 hostname: "media.designcafe.com",
             },
+            {
+                protocol: "https",
+                hostname: "whatsheethinks.wordpress.com",
+            },
         ],
     },
     /* config options here */

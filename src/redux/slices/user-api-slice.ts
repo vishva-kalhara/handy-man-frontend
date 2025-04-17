@@ -33,8 +33,24 @@ export const userApiSlice = createApi({
                     },
                 }),
             }),
+            updateMyPicture: builder.mutation<null, FormData>({
+                query: (formData) => ({
+                    url: `/users/me/my-img`,
+                    method: "PATCH",
+                    body: formData,
+                    headers: {
+                        Authorization: `Bearer ${
+                            localStorage.getItem("token") || ""
+                        }`,
+                    },
+                }),
+            }),
         };
     },
 });
 
-export const { useGetUserQuery, useUpdateMyBioMutation } = userApiSlice;
+export const {
+    useGetUserQuery,
+    useUpdateMyBioMutation,
+    useUpdateMyPictureMutation,
+} = userApiSlice;
