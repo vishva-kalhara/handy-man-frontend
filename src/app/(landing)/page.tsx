@@ -3,6 +3,7 @@ import FilterForm from "@/forms/tasks/filter-form";
 import { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import TasksContainer from "@/components/home/tasks-container";
+import PageLoadingCard from "@/components/page-loading-card";
 
 export default function Home() {
     const router = useRouter();
@@ -21,7 +22,7 @@ export default function Home() {
     }, [router]);
 
     return (
-        <Suspense fallback={<div className="my-36 mx-auto">Loading...</div>}>
+        <Suspense fallback={<PageLoadingCard />}>
             <>
                 <FilterForm />
                 <TasksContainer />
