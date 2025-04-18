@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import Spinner from "../spinner";
 import TaskCard from "./task-card";
 import { useEffect } from "react";
+import { TriangleAlert } from "lucide-react";
 
 const TasksContainer = () => {
     const searchParams = useSearchParams();
@@ -20,13 +21,22 @@ const TasksContainer = () => {
         return <Spinner size={"large"} className="my-36 mx-auto" />;
     }
 
+    if (!tasks || tasks.length === 0) {
+        return (
+            <div className="my-24 mx-auto flex flex-col items-center justify-center">
+                <TriangleAlert className="size-10  text-gray-500" />
+                <h2 className="text-lg font-semibold text-gray-500 mt-2">
+                    No tasks found
+                </h2>
+            </div>
+        );
+    }
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {tasks ? (
-                tasks.map((task) => <TaskCard key={task.id} task={task} />)
-            ) : (
-                <p className="text-center">No Tasks</p>
-            )}
+            {tasks.map((task) => (
+                <TaskCard key={task.id} task={task} />
+            ))}
         </div>
     );
 };
