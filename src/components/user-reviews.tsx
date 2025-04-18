@@ -7,6 +7,7 @@ import {
     ArrowUpNarrowWide,
     RefreshCw,
 } from "lucide-react";
+import Spinner from "./spinner";
 
 type Props = {
     userId: string;
@@ -41,7 +42,13 @@ const UserReviews = ({ userId }: Props) => {
     };
 
     if (isLoading) {
-        return <p className="text-center">Loading...</p>;
+        return (
+            <div className="flex flex-col w-full bg-white p-4 border border-black/15 rounded-xl">
+                <div className="w-full flex justify-center my-12">
+                    <Spinner size={"large"} />
+                </div>
+            </div>
+        );
     }
 
     if (!isLoading && reviews && reviews.length === 0) {

@@ -27,6 +27,10 @@ const nextConfig: NextConfig = {
                 protocol: "https",
                 hostname: "whatsheethinks.wordpress.com",
             },
+            {
+                protocol: "https",
+                hostname: "media.gettyimages.com",
+            },
         ],
     },
     /* config options here */

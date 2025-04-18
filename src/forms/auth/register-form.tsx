@@ -2,7 +2,10 @@
 import FormButton from "@/components/form-button";
 import InputField from "@/components/input-field";
 import RootError from "@/components/root-error";
-import { useCreateAccountMutation } from "@/redux/slices/auth-api-slice";
+import {
+    useCreateAccountMutation,
+    useGetAuthQuery,
+} from "@/redux/slices/auth-api-slice";
 import { ApiErrorResponse } from "@/types/api-error-reponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
@@ -45,6 +48,8 @@ const RegisterForm = () => {
     const [mutationFn, { isSuccess, error, data, isError }] =
         useCreateAccountMutation();
 
+    const { refetch: refetchAuth } = useGetAuthQuery();
+
     const submitForm: SubmitHandler<RegisterRequestData> = async (data) => {
         try {
             await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -66,10 +71,14 @@ const RegisterForm = () => {
 
     useEffect(() => {
         if (data?.token) {
+            console.log("Login successful:", data);
             localStorage.setItem("token", data?.token);
-            router.push("/");
+            setTimeout(async () => {
+                router.push("/");
+                await refetchAuth();
+            }, 200);
         }
-    }, [data, isSuccess, router]);
+    }, [data, isSuccess, refetchAuth, router]);
 
     return (
         <form onSubmit={handleSubmit(submitForm)}>

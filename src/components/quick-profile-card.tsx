@@ -8,7 +8,10 @@ const QuickProfileCard = ({
     user,
     isMe = false,
 }: {
-    user: Pick<User, "id" | "profileImage" | "displayName" | "avgRating">;
+    user: Pick<
+        User,
+        "id" | "profileImage" | "displayName" | "avgRating" | "bio"
+    >;
     isMe?: boolean;
 }) => {
     return (
@@ -50,6 +53,11 @@ const QuickProfileCard = ({
                 <h4 className="text-xl text-black/80 font-semibold text-center mt-6">
                     {user.displayName}
                 </h4>
+                {user.bio && (
+                    <p className="text-sm text-black/60 text-center mt-2">
+                        {user.bio}
+                    </p>
+                )}
             </Link>
             {isMe ? (
                 <Link href={"/me/edit"}>

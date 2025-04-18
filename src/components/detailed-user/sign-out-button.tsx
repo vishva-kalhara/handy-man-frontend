@@ -25,11 +25,11 @@ const SignOutButton = () => {
     };
 
     return (
-        <div className="flex flex-col w-full -mt-2">
+        <div className=" w-full">
             <StageButton
                 handleSubmit={signOutFn}
                 isSubmitting={isLoading}
-                className="bg-red-500 hover:bg-red-600 text-white w-full"
+                className="bg-red-500 hover:bg-red-600 text-white "
             >
                 Sign Out <ArrowRight className="size-4" />
             </StageButton>

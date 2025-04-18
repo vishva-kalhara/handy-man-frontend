@@ -57,9 +57,9 @@ const DetailedUserBase = ({ userId, isLoggedInUser }: Props) => {
                             View My {section == "REVIEWS" ? "Tasks" : "Reviews"}{" "}
                             <ArrowRight className="size-4" />
                         </Button>
-                        <SignOutButton />
                     </div>
                 )}
+                <SignOutButton />
             </div>
             <div className="w-full flex flex-col gap-4 md:gap-6">
                 {section == "REVIEWS" ? (

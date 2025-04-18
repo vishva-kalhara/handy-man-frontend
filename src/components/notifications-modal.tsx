@@ -4,6 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useGetMyNotificationsQuery } from "@/redux/slices/notification-api-slice";
+import Spinner from "./spinner";
 
 const NotificationModal = () => {
     const {
@@ -25,7 +26,7 @@ const NotificationModal = () => {
             <PopoverTrigger asChild>
                 <Button variant={"dark"} className="relative">
                     <Bell size={5} />
-                    {notifications && (
+                    {notifications && notifications.length > 0 && (
                         <div className="size-2 bg-red-500 rounded-full absolute top-1.5 right-1.5" />
                     )}
                 </Button>
@@ -84,20 +85,17 @@ const NotificationModal = () => {
                                             </Link>
                                         ))}
                                 </div>
-                            ) : isLoading ? (
-                                <div className="h-52 flex items-center justify-center">
-                                    <p className="text-muted-foreground text-sm">
-                                        Loading notifications...
-                                    </p>
-                                </div>
                             ) : (
-                                <div className="h-52 flex items-center justify-center">
-                                    <p className="text-muted-foreground text-sm">
-                                        No notifications yet.
-                                    </p>
-                                    <Button variant={"outline"} size={"sm"}>
-                                        <RefreshCw className="size-3" /> Refresh
-                                    </Button>
+                                <div className="h-52 flex gap-2 flex-col items-center justify-center">
+                                    {isLoading ? (
+                                        <div className="w-full flex justify-center -mt-6">
+                                            <Spinner size={"large"} />
+                                        </div>
+                                    ) : (
+                                        <p className="text-muted-foreground text-sm">
+                                            No notifications yet.
+                                        </p>
+                                    )}
                                 </div>
                             )
 
