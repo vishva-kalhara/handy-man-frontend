@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { FilterIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import ClearFiltersCard from "./clear-filters-card";
 
 const schema = z.object({
     minPrice: z.coerce
@@ -87,6 +88,7 @@ const FilterForm = () => {
 
     return (
         <form onSubmit={handleSubmit(submitForm)}>
+            <ClearFiltersCard />
             <div className="w-full rounded-xl bg-white border border-black/10 p-6 md:pb-0 mb-8 flex-col gap-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 ">
                     <InputField
