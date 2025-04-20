@@ -29,10 +29,7 @@ const LoginForm = () => {
         setError,
     } = useForm<LoginRequestData>({
         resolver: zodResolver(schema),
-        defaultValues: {
-            email: "test@example.com",
-            password: "123456",
-        },
+        defaultValues: {},
     });
 
     const router = useRouter();

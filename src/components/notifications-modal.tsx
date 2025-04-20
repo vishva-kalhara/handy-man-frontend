@@ -26,9 +26,11 @@ const NotificationModal = () => {
             <PopoverTrigger asChild>
                 <Button variant={"dark"} className="relative">
                     <Bell size={5} />
-                    {notifications && notifications.length > 0 && (
-                        <div className="size-2 bg-red-500 rounded-full absolute top-1.5 right-1.5" />
-                    )}
+                    {notifications &&
+                        notifications.filter((n) => n.hasNoted == true).length >
+                            0 && (
+                            <div className="size-2 bg-red-500 rounded-full absolute top-1.5 right-1.5" />
+                        )}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-80 p-0">
