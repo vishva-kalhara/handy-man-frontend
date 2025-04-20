@@ -6,7 +6,7 @@ export const reviewApiSlice = createApi({
     reducerPath: "reviews",
     tagTypes: ["reviews"],
     baseQuery: fetchBaseQuery({
-        baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+        baseUrl: "/api/v1",
     }),
     endpoints: (builder) => ({
         addReview: builder.mutation<Review, AddReviewFormType>({

@@ -5,7 +5,7 @@ export const bidsApiSlice = createApi({
     reducerPath: "Bids",
     tagTypes: ["Bids"],
     baseQuery: fetchBaseQuery({
-        baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+        baseUrl: "/api/v1",
     }),
     endpoints: (builder) => {
         return {

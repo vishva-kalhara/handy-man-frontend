@@ -5,7 +5,7 @@ export const userApiSlice = createApi({
     reducerPath: "users",
     tagTypes: ["users", "me"],
     baseQuery: fetchBaseQuery({
-        baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+        baseUrl: "/api/v1",
     }),
     endpoints: (builder) => {
         return {

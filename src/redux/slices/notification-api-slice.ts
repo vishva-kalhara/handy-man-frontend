@@ -5,7 +5,7 @@ export const notificationApiSlice = createApi({
     reducerPath: "notifications",
     tagTypes: ["Notifications"],
     baseQuery: fetchBaseQuery({
-        baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+        baseUrl: "/api/v1",
     }),
     endpoints: (builder) => {
         return {
