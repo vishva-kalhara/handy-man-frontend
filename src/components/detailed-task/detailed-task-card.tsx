@@ -1,15 +1,12 @@
-import { Button } from "@/components/ui/button";
 import { Task } from "@/types/task";
-import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
+import BackButton from "../back-button";
 
 const DetailedTaskCard = ({ task }: { task: Task }) => {
     return (
         <div className="w-full flex flex-col bg-white p-3 border border-black/15 rounded-2xl">
             <div className="flex justify-between mb-3">
-                <Button variant={"light"}>
-                    <ArrowLeft size={5} /> Back
-                </Button>
+                <BackButton />
                 <div className="flex gap-2 items-center">
                     {task.isEmergency && (
                         <div className="py-0.5 px-1 bg-red-50 border border-red-200 rounded-full">
