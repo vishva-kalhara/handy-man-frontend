@@ -19,8 +19,8 @@ const schema = z.object({
         .min(5, {
             message: "Comment must be at least 5 characters.",
         })
-        .max(100, {
-            message: "Comment must not exceed 100 characters.",
+        .max(225, {
+            message: "Comment must not exceed 225 characters.",
         }),
     reviewedToId: z.string().optional(),
     taskId: z.string().optional(),
