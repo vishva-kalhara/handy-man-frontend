@@ -3,16 +3,19 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { User } from "@/types/user";
+import { Dispatch, SetStateAction } from "react";
 
 const QuickProfileCard = ({
     user,
     isMe = false,
+    setIsChatVisible,
 }: {
     user: Pick<
         User,
         "id" | "profileImage" | "displayName" | "avgRating" | "bio"
     >;
     isMe?: boolean;
+    setIsChatVisible?: Dispatch<SetStateAction<boolean>>;
 }) => {
     return (
         <div className="flex bg-white hover:cursor-pointer pt-16 pb-10 px-10 border-[1.5px] transition-all duration-300 border-black/15 hover:border-blue-600 rounded-xl relative flex-col">
@@ -69,9 +72,15 @@ const QuickProfileCard = ({
                     </Button>
                 </Link>
             ) : (
-                <Button variant={"light"} className="absolute top-4 right-4">
-                    <MessageSquare fill="#454545" size={5} /> Message
-                </Button>
+                setIsChatVisible && (
+                    <Button
+                        onClick={() => setIsChatVisible(true)}
+                        variant={"light"}
+                        className="absolute top-4 right-4"
+                    >
+                        <MessageSquare fill="#454545" size={5} /> Message
+                    </Button>
+                )
             )}
         </div>
     );

@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { Task } from "@/types/task";
 import { DetailedTaskContext } from "@/contexts/detailed-task-context";
 import ManagePollingCard from "@/components/detailed-task/manage-polling-card";
+import MiniChat from "@/components/chat/mini-chat";
 
 const Page = () => {
     const { id } = useParams<{ id: string }>();
@@ -26,6 +27,7 @@ const Page = () => {
 
     const [task, setTask] = useState<Task | undefined>(undefined);
     const [isPolling, setIsPolling] = useState(false);
+    const [isChatVisible, setIsChatVisible] = useState(false);
 
     const { data, isLoading, isError, refetch } = useGetOneTaskQuery(id, {
         pollingInterval: isPolling ? 5000 : 0,
@@ -172,7 +174,17 @@ const Page = () => {
                     ) : (
                         (!user || task.chosenBidder?.id != user.id) && (
                             <>
-                                <QuickProfileCard user={task.creator} />
+                                {isChatVisible ? (
+                                    <MiniChat
+                                        setIsChatVisible={setIsChatVisible}
+                                        user={task.creator}
+                                    />
+                                ) : (
+                                    <QuickProfileCard
+                                        user={task.creator}
+                                        setIsChatVisible={setIsChatVisible}
+                                    />
+                                )}
                                 <BiddingCard
                                     taskId={task.id}
                                     taskStatus={task.taskStatus}
