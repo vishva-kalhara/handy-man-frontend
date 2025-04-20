@@ -5,7 +5,7 @@ import Link from "next/link";
 const TaskCard = ({ task }: { task: Task }) => {
     return (
         <Link href={`/tasks/${task.id}`}>
-            <div className="p-2 border border-black/10 w-full bg-white rounded-xl">
+            <div className="p-2 border h-full border-black/10 w-full bg-white rounded-xl">
                 <div className="relative w-full h-[300px] rounded-lg border-black/10 border overflow-hidden">
                     <Image
                         alt="img"
