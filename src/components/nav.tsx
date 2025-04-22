@@ -6,6 +6,7 @@ import { Plus, UserRound } from "lucide-react";
 import Spinner from "./spinner";
 import { useAuth } from "@/hooks/use-auth";
 import NotificationModal from "./notifications-modal";
+import ChatModal from "./chat/chat-modal";
 
 const NotLoggedInButtons = () => {
     return (
@@ -31,6 +32,12 @@ const LoggedInButtons = () => {
                     <UserRound size={5} />
                 </Button>
             </Link>
+            {/* <Link href={"/chat"} className="flex focus:outline-0">
+                <Button variant={"dark"}>
+                    <MessageSquareText size={5} />
+                </Button>
+            </Link> */}
+            <ChatModal />
             <NotificationModal />
             <Link href={"/tasks/new-task"} className="ms-4 focus:outline-0">
                 <Button variant={"white"} className="gap-2">

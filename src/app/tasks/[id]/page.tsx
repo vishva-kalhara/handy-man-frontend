@@ -175,10 +175,12 @@ const Page = () => {
                         (!user || task.chosenBidder?.id != user.id) && (
                             <>
                                 {isChatVisible ? (
-                                    <MiniChat
-                                        setIsChatVisible={setIsChatVisible}
-                                        user={task.creator}
-                                    />
+                                    <div className="flex overflow-hidden bg-white border border-black/15 rounded-xl relative flex-col min-h-[50dvh] h-full max-h-[80vh]">
+                                        <MiniChat
+                                            isChatSelected={task.creator}
+                                            setIsChatSelected={setIsChatVisible}
+                                        />
+                                    </div>
                                 ) : (
                                     <QuickProfileCard
                                         user={task.creator}

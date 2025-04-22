@@ -4,31 +4,47 @@ import { Button } from "../ui/button";
 import { Link2, Send, X } from "lucide-react";
 import { Input } from "../ui/input";
 
-const MiniChat = ({
-    user,
-    setIsChatVisible,
-}: {
-    setIsChatVisible: Dispatch<SetStateAction<boolean>>;
-    user: Pick<User, "id" | "profileImage" | "displayName">;
-}) => {
+type Props = {
+    isChatSelected: Pick<
+        User,
+        "id" | "profileImage" | "displayName" | "avgRating" | "bio"
+    >;
+    setIsChatSelected:
+        | Dispatch<
+              SetStateAction<
+                  | false
+                  | Pick<
+                        User,
+                        | "id"
+                        | "profileImage"
+                        | "displayName"
+                        | "avgRating"
+                        | "bio"
+                    >
+              >
+          >
+        | Dispatch<SetStateAction<boolean>>;
+};
+
+const MiniChat = ({ isChatSelected, setIsChatSelected }: Props) => {
     return (
-        <div className="flex bg-white border border-black/15 rounded-xl relative flex-col min-h-[50dvh] h-full max-h-[80vh]">
-            <div className="w-full p-4 items-center flex justify-between border-b border-b-black/15">
+        <>
+            <div className="w-full p-4 items-center rounded-t-md flex justify-between border-b bg-white border-b-black/15">
                 <div className="flex items-center gap-3">
                     <div className="size-10 rounded-full border-black/10 border-2 relative "></div>
                     <h4 className="text-lg font-semibold">
-                        {user.displayName}
+                        {isChatSelected.displayName}
                     </h4>
                 </div>
                 <Button
                     className="size-10"
                     variant={"outline"}
-                    onClick={() => setIsChatVisible(false)}
+                    onClick={() => setIsChatSelected(false)}
                 >
                     <X className="size-4" />
                 </Button>
             </div>
-            <div className="h-full overflow-y-scroll flex flex-col gap-2 p-4">
+            <div className="h-full overflow-y-scroll bg-white max-h-[50vh] flex flex-col gap-2 p-4">
                 <div className="w-full justify-start flex">
                     <div className="bg-[#f4f4f4] py-2 px-3 rounded-xl max-w-2/3">
                         <p className="font-medium text-sm">
@@ -88,7 +104,7 @@ const MiniChat = ({
                     </div>
                 </div>
             </div>
-            <div className="border-t border-t-black/15 p-4 flex gap-2 items-center">
+            <div className="border-t bg-white rounded-b-md border-t-black/15 p-4 flex gap-2 items-center">
                 <Button
                     className="size-10"
                     variant={"outline"}
@@ -107,7 +123,7 @@ const MiniChat = ({
                     <Send className="size-4" />
                 </Button>
             </div>
-        </div>
+        </>
     );
 };
 
