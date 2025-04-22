@@ -10,21 +10,14 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 type Props = {
-    isChatSelected: Pick<
-        User,
-        "id" | "profileImage" | "displayName" | "avgRating" | "bio"
-    >;
+    isChatSelected: Pick<User, "id" | "profileImage" | "displayName">;
     setIsChatSelected:
         | Dispatch<
               SetStateAction<
                   | false
                   | Pick<
                         User,
-                        | "id"
-                        | "profileImage"
-                        | "displayName"
-                        | "avgRating"
-                        | "bio"
+                        "id" | "profileImage" | "displayName" | "avgRating"
                     >
               >
           >

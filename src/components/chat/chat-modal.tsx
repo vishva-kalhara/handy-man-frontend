@@ -1,95 +1,19 @@
 "use client";
-import { MessageSquareText, RefreshCw } from "lucide-react";
+import { MessageSquareText, RefreshCw, Star } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import MiniChat from "./mini-chat";
 import { User } from "@/types/user";
+import { useGetMyRecipientsQuery } from "@/redux/slices/messages-api-slice";
+import Image from "next/image";
 
 const ChatModal = () => {
     const [isChatSelected, setIsChatSelected] = useState<
-        | false
-        | Pick<
-              User,
-              "id" | "profileImage" | "displayName" | "avgRating" | "bio"
-          >
+        false | Pick<User, "id" | "profileImage" | "displayName" | "avgRating">
     >(false);
 
-    const users: Pick<
-        User,
-        "id" | "profileImage" | "displayName" | "avgRating" | "bio"
-    >[] = [
-        {
-            id: "1",
-            displayName: "John Doe",
-            profileImage: null,
-            avgRating: 4.5,
-            bio: "Experienced handyman with a focus on quality.",
-        },
-        {
-            id: "2",
-            displayName: "Jane Smith",
-            profileImage: null,
-            avgRating: 4.8,
-            bio: "Passionate about helping clients with home repairs.",
-        },
-        {
-            id: "3",
-            displayName: "Alice Johnson",
-            profileImage: null,
-            avgRating: 4.2,
-            bio: "Skilled in a variety of household tasks.",
-        },
-        {
-            id: "4",
-            displayName: "Bob Brown",
-            profileImage: null,
-            avgRating: 4.0,
-            bio: "Reliable and efficient handyman services.",
-        },
-        {
-            id: "5",
-            displayName: "Charlie Davis",
-            profileImage: null,
-            avgRating: 3.9,
-            bio: "Dedicated to providing excellent service.",
-        },
-        {
-            id: "6",
-            displayName: "Diana Evans",
-            profileImage: null,
-            avgRating: 4.7,
-            bio: "Specialist in home improvement projects.",
-        },
-        {
-            id: "7",
-            displayName: "Ethan Foster",
-            profileImage: null,
-            avgRating: 4.3,
-            bio: "Friendly and professional handyman.",
-        },
-        {
-            id: "8",
-            displayName: "Fiona Green",
-            profileImage: null,
-            avgRating: 4.6,
-            bio: "Committed to making your home repairs easy.",
-        },
-        {
-            id: "9",
-            displayName: "George Harris",
-            profileImage: null,
-            avgRating: 4.1,
-            bio: "Experienced in a wide range of repair tasks.",
-        },
-        {
-            id: "10",
-            displayName: "Hannah Ivers",
-            profileImage: null,
-            avgRating: 4.9,
-            bio: "Top-rated handyman with years of experience.",
-        },
-    ];
+    const { data: users } = useGetMyRecipientsQuery();
 
     const handleRefresh = async () => {
         try {
@@ -131,16 +55,58 @@ const ChatModal = () => {
                                     display: none;
                                 }
                             `}</style>
-                            {users.map((u) => (
-                                <Button
-                                    key={u.id}
-                                    onClick={() => setIsChatSelected(u)}
-                                    variant={"ghost"}
-                                    className="hover:bg-gray-100 h-10 border border-transparent w-full justify-start"
-                                >
-                                    {u.displayName}
-                                </Button>
-                            ))}
+                            {users &&
+                                users.length > 0 &&
+                                users.map((u) => (
+                                    <Button
+                                        key={u.id}
+                                        onClick={() => setIsChatSelected(u)}
+                                        variant={"ghost"}
+                                        className="hover:bg-gray-100 h-16 border border-transparent w-full justify-between items-center"
+                                    >
+                                        <div className="flex items-center ">
+                                            <div className="relative w-10 h-10 rounded-full border-black/10 border-2">
+                                                {u.profileImage ? (
+                                                    <Image
+                                                        alt="img"
+                                                        src={u.profileImage}
+                                                        fill
+                                                        className={`rounded-full object-cover`}
+                                                        sizes="100vw"
+                                                    />
+                                                ) : (
+                                                    <div className="absolute flex justify-center items-center inset-0 w-10 h-10 rounded-full bg-gray-200">
+                                                        <span className="text-4xl font-bold text-gray-500">
+                                                            {u.displayName
+                                                                .charAt(0)
+                                                                .toUpperCase()}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <p className="text-left text-base font-semibold text-gray-800 ml-2">
+                                                {u.displayName}
+                                            </p>
+                                        </div>
+                                        <div className="h-[28px] flex gap-1 items-center px-2.5 bg-[#1e1e1e] rounded-full">
+                                            {u.avgRating ? (
+                                                <>
+                                                    <Star
+                                                        fill="#fff"
+                                                        className="size-4"
+                                                    />
+                                                    <span className="text-xs text-white font-semibold">
+                                                        {u.avgRating}
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <span className="text-xs text-white font-semibold">
+                                                    N/A
+                                                </span>
+                                            )}
+                                        </div>
+                                    </Button>
+                                ))}
                         </div>
                     ) : (
                         <div className="p-2 bg-[#f4f4f4]">
