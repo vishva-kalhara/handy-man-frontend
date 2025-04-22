@@ -1,8 +1,8 @@
 import { User } from "@/types/user";
 import { Dispatch, SetStateAction } from "react";
 import { Button } from "../ui/button";
-import { Link2, Send, X } from "lucide-react";
-import { Input } from "../ui/input";
+import { X } from "lucide-react";
+import SendMessageForm from "@/forms/messages/send-message-form";
 
 type Props = {
     isChatSelected: Pick<
@@ -104,25 +104,7 @@ const MiniChat = ({ isChatSelected, setIsChatSelected }: Props) => {
                     </div>
                 </div>
             </div>
-            <div className="border-t bg-white rounded-b-md border-t-black/15 p-4 flex gap-2 items-center">
-                <Button
-                    className="size-10"
-                    variant={"outline"}
-                    // onClick={() => setIsChatVisible(false)}
-                >
-                    <Link2 className="size-4" />
-                </Button>
-                <Input
-                    className="w-full h-10"
-                    placeholder="Type yuor message..."
-                />
-                <Button
-                    className="size-10"
-                    // onClick={() => setIsChatVisible(false)}
-                >
-                    <Send className="size-4" />
-                </Button>
-            </div>
+            <SendMessageForm recipientId={isChatSelected.id} />
         </>
     );
 };
