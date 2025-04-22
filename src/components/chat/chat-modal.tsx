@@ -110,7 +110,7 @@ const ChatModal = () => {
                                     </Button>
                                 ))
                             ) : (
-                                <div className="h-52 flex gap-2 flex-col items-center justify-center">
+                                <div className="max-h-[60vh] h-full min-h-[40vh] flex gap-2 flex-col items-center justify-center">
                                     {isLoading ? (
                                         <div className="w-full flex justify-center -mt-6">
                                             <Spinner size={"large"} />
