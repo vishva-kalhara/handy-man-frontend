@@ -33,7 +33,7 @@ const MiniChat = ({ isChatSelected, setIsChatSelected }: Props) => {
 
     return (
         <>
-            <div className="w-full p-4 items-center max-h-[60vh] h-full min-h-[40vh]  rounded-t-md flex justify-between border-b bg-white border-b-black/15">
+            <div className="w-full p-4 items-center  rounded-t-md flex justify-between border-b bg-white border-b-black/15">
                 <div className="flex items-center gap-3">
                     <div className="relative w-10 h-10 rounded-full border-black/10 border-2">
                         {isChatSelected.profileImage ? (
@@ -86,7 +86,7 @@ const MiniChat = ({ isChatSelected, setIsChatSelected }: Props) => {
                     </Button>
                 </div>
             </div>
-            <div className="h-full overflow-y-scroll bg-white max-h-[50vh] flex flex-col flex-1 gap-2 p-4">
+            <div className="h-full min-h-[40vh]  overflow-y-scroll bg-white max-h-[50vh] flex flex-col flex-1 gap-2 p-4">
                 {messages && messages.length > 0 ? (
                     messages.map((m) => <ChatItem key={m.id} message={m} />)
                 ) : (
