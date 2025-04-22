@@ -14,11 +14,11 @@ const ChatModal = () => {
         false | Pick<User, "id" | "profileImage" | "displayName" | "avgRating">
     >(false);
 
-    const { data: users, isLoading } = useGetMyRecipientsQuery();
+    const { data: users, isLoading, refetch } = useGetMyRecipientsQuery();
 
     const handleRefresh = async () => {
         try {
-            // await refetch();
+            await refetch();
         } catch (error) {
             console.error("Error refreshing notifications:", error);
         }
@@ -35,17 +35,19 @@ const ChatModal = () => {
                 <div className="flex flex-col">
                     <div className="border-b p-4 flex justify-between items-center">
                         <h4 className="font-semibold text-lg px-2">Messages</h4>
-                        <Button
-                            variant={"outline"}
-                            size={"sm"}
-                            onClick={handleRefresh}
-                        >
-                            <RefreshCw className="size-3" /> Refresh
-                        </Button>
+                        {!isChatSelected && (
+                            <Button
+                                variant={"outline"}
+                                size={"sm"}
+                                onClick={handleRefresh}
+                            >
+                                <RefreshCw className="size-3" /> Refresh
+                            </Button>
+                        )}
                     </div>
                     {!isChatSelected ? (
                         <div
-                            className="max-h-[60vh] overflow-y-auto p-2 scrollbar-none "
+                            className="max-h-[60vh] h-full min-h-[40vh] overflow-y-auto p-2 scrollbar-none "
                             style={{
                                 scrollbarWidth: "none",
                                 msOverflowStyle: "none",
