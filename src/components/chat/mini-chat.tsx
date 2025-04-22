@@ -8,6 +8,7 @@ import { useGetMessagesByRecipientIdQuery } from "@/redux/slices/messages-api-sl
 import ChatItem from "./chat-item";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Spinner from "../spinner";
 
 type Props = {
     isChatSelected: Pick<User, "id" | "profileImage" | "displayName">;
@@ -25,9 +26,11 @@ type Props = {
 };
 
 const MiniChat = ({ isChatSelected, setIsChatSelected }: Props) => {
-    const { data: messages, refetch } = useGetMessagesByRecipientIdQuery(
-        isChatSelected.id
-    );
+    const {
+        data: messages,
+        refetch,
+        isLoading,
+    } = useGetMessagesByRecipientIdQuery(isChatSelected.id);
 
     const [isRefetching, setIsRefetching] = useState(false);
 
@@ -90,10 +93,16 @@ const MiniChat = ({ isChatSelected, setIsChatSelected }: Props) => {
                 {messages && messages.length > 0 ? (
                     messages.map((m) => <ChatItem key={m.id} message={m} />)
                 ) : (
-                    <div className="flex-1 flex flex-col justify-center items-center">
-                        <p className="text-center text-gray-500 text-lg font-semibold">
-                            No messages yet.
-                        </p>
+                    <div className="max-h-[60vh] h-full min-h-[40vh] flex gap-2 flex-col items-center justify-center">
+                        {isLoading ? (
+                            <div className="w-full flex justify-center -mt-6">
+                                <Spinner size={"large"} />
+                            </div>
+                        ) : (
+                            <p className="text-muted-foreground text-sm">
+                                No Messages yet.
+                            </p>
+                        )}
                     </div>
                 )}
             </div>
