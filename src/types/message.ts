@@ -7,4 +7,5 @@ export type Message = {
     sender: User;
     recipient: User;
     messageType: "TEXT" | "TASK";
+    isSentByMe: boolean;
 };

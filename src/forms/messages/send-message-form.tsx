@@ -10,6 +10,17 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+    BaseQueryFn,
+    FetchArgs,
+    FetchBaseQueryError,
+    FetchBaseQueryMeta,
+} from "@reduxjs/toolkit/query";
+import {
+    QueryActionCreatorResult,
+    QueryDefinition,
+} from "@reduxjs/toolkit/query";
+import { Message } from "@/types/message";
 
 const schema = z.object({
     message: z.string(),
@@ -17,7 +28,27 @@ const schema = z.object({
 
 export type SendMessageFormType = z.infer<typeof schema>;
 
-const SendMessageForm = ({ recipientId }: { recipientId: string }) => {
+type Props = {
+    recipientId: string;
+
+    refetch: () => QueryActionCreatorResult<
+        QueryDefinition<
+            string,
+            BaseQueryFn<
+                string | FetchArgs,
+                unknown,
+                FetchBaseQueryError,
+                object,
+                FetchBaseQueryMeta
+            >,
+            "messages",
+            Omit<Message, "sender" | "recipient">[],
+            "messages"
+        >
+    >;
+};
+
+const SendMessageForm = ({ recipientId, refetch }: Props) => {
     const [isText, setIsText] = useState(true);
 
     const url = usePathname();
@@ -52,9 +83,11 @@ const SendMessageForm = ({ recipientId }: { recipientId: string }) => {
         if (isSuccess) {
             setIsText(true);
             reset();
-            // refetch
+            setTimeout(async () => {
+                await refetch();
+            }, 100);
         }
-    }, [isSuccess, reset]);
+    }, [isSuccess, refetch, reset]);
 
     const onSubmit: SubmitHandler<SendMessageFormType> = async (data) => {
         try {

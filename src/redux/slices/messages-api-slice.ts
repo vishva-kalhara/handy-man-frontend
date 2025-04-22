@@ -30,8 +30,23 @@ export const messagesApiSlice = createApi({
                 }),
                 invalidatesTags: ["messages"],
             }),
+            getMessagesByRecipientId: build.query<
+                Omit<Message, "sender" | "recipient">[],
+                string
+            >({
+                query: (recipientId) => ({
+                    url: `/messages/by-recipient/${recipientId}`,
+                    method: "GET",
+                    headers: {
+                        authorization:
+                            `Bearer ${localStorage.getItem("token")}` || "",
+                    },
+                }),
+                providesTags: ["messages"],
+            }),
         };
     },
 });
 
-export const { useSendMessageMutation } = messagesApiSlice;
+export const { useSendMessageMutation, useGetMessagesByRecipientIdQuery } =
+    messagesApiSlice;
