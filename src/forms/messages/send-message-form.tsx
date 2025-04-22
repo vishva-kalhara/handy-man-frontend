@@ -128,7 +128,7 @@ const SendMessageForm = ({ recipientId, refetch }: Props) => {
                         <Input
                             {...register("message")}
                             className="w-full h-10"
-                            placeholder="Type yuor message..."
+                            placeholder="Type the message..."
                         />
                         <Button
                             disabled={isLoading}

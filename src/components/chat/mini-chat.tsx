@@ -86,11 +86,15 @@ const MiniChat = ({ isChatSelected, setIsChatSelected }: Props) => {
                     </Button>
                 </div>
             </div>
-            <div className="h-full overflow-y-scroll bg-white max-h-[50vh] flex flex-col gap-2 p-4">
+            <div className="h-full overflow-y-scroll bg-white max-h-[50vh] flex flex-col flex-1 gap-2 p-4">
                 {messages && messages.length > 0 ? (
                     messages.map((m) => <ChatItem key={m.id} message={m} />)
                 ) : (
-                    <></>
+                    <div className="flex-1 flex flex-col justify-center items-center">
+                        <p className="text-center text-gray-500 text-lg font-semibold">
+                            No messages yet.
+                        </p>
+                    </div>
                 )}
             </div>
             <SendMessageForm
