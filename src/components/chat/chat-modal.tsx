@@ -124,7 +124,7 @@ const ChatModal = () => {
                             )}
                         </div>
                     ) : (
-                        <div className="p-2 bg-[#f4f4f4]">
+                        <div className="p-2  bg-[#f4f4f4]">
                             <MiniChat
                                 setIsChatSelected={setIsChatSelected}
                                 isChatSelected={isChatSelected}

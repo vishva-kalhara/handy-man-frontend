@@ -33,7 +33,7 @@ const MiniChat = ({ isChatSelected, setIsChatSelected }: Props) => {
 
     return (
         <>
-            <div className="w-full p-4 items-center rounded-t-md flex justify-between border-b bg-white border-b-black/15">
+            <div className="w-full p-4 items-center max-h-[60vh] h-full min-h-[40vh]  rounded-t-md flex justify-between border-b bg-white border-b-black/15">
                 <div className="flex items-center gap-3">
                     <div className="relative w-10 h-10 rounded-full border-black/10 border-2">
                         {isChatSelected.profileImage ? (
