@@ -7,13 +7,14 @@ import MiniChat from "./mini-chat";
 import { User } from "@/types/user";
 import { useGetMyRecipientsQuery } from "@/redux/slices/messages-api-slice";
 import Image from "next/image";
+import Spinner from "../spinner";
 
 const ChatModal = () => {
     const [isChatSelected, setIsChatSelected] = useState<
         false | Pick<User, "id" | "profileImage" | "displayName" | "avgRating">
     >(false);
 
-    const { data: users } = useGetMyRecipientsQuery();
+    const { data: users, isLoading } = useGetMyRecipientsQuery();
 
     const handleRefresh = async () => {
         try {
@@ -55,8 +56,7 @@ const ChatModal = () => {
                                     display: none;
                                 }
                             `}</style>
-                            {users &&
-                                users.length > 0 &&
+                            {users && users.length > 0 ? (
                                 users.map((u) => (
                                     <Button
                                         key={u.id}
@@ -106,7 +106,20 @@ const ChatModal = () => {
                                             )}
                                         </div>
                                     </Button>
-                                ))}
+                                ))
+                            ) : (
+                                <div className="h-52 flex gap-2 flex-col items-center justify-center">
+                                    {isLoading ? (
+                                        <div className="w-full flex justify-center -mt-6">
+                                            <Spinner size={"large"} />
+                                        </div>
+                                    ) : (
+                                        <p className="text-muted-foreground text-sm">
+                                            No Messages yet.
+                                        </p>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <div className="p-2 bg-[#f4f4f4]">
