@@ -67,8 +67,8 @@ const ChatModal = () => {
                                         className="hover:bg-gray-100 h-16 border border-transparent w-full justify-between items-center"
                                     >
                                         <div className="flex items-center ">
-                                            <div className="relative w-10 h-10 rounded-full border-black/10 border-2">
-                                                {u.profileImage ? (
+                                            {u.profileImage ? (
+                                                <div className="relative w-10 h-10 rounded-full border-black/10 border-2">
                                                     <Image
                                                         alt="img"
                                                         src={u.profileImage}
@@ -76,33 +76,33 @@ const ChatModal = () => {
                                                         className={`rounded-full object-cover`}
                                                         sizes="100vw"
                                                     />
-                                                ) : (
-                                                    <div className="absolute flex justify-center items-center inset-0 w-10 h-10 rounded-full bg-gray-200">
-                                                        <span className="text-4xl font-bold text-gray-500">
-                                                            {u.displayName
-                                                                .charAt(0)
-                                                                .toUpperCase()}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                            </div>
+                                                </div>
+                                            ) : (
+                                                <div className="flex justify-center items-center size-10 rounded-full bg-gray-200">
+                                                    <span className="text-xl font-bold text-gray-500">
+                                                        {u.displayName
+                                                            .charAt(0)
+                                                            .toUpperCase()}
+                                                    </span>
+                                                </div>
+                                            )}
                                             <p className="text-left text-base font-semibold text-gray-800 ml-2">
                                                 {u.displayName}
                                             </p>
                                         </div>
-                                        <div className="h-[28px] flex gap-1 items-center px-2.5 bg-[#1e1e1e] rounded-full">
+                                        <div className="h-[28px] flex gap-1 items-center px-2.5 bg-[#1e1e1e]/10 rounded-full">
                                             {u.avgRating ? (
                                                 <>
                                                     <Star
-                                                        fill="#fff"
+                                                        fill="#000"
                                                         className="size-4"
                                                     />
-                                                    <span className="text-xs text-white font-semibold">
+                                                    <span className="text-xs text-black font-semibold">
                                                         {u.avgRating}
                                                     </span>
                                                 </>
                                             ) : (
-                                                <span className="text-xs text-white font-semibold">
+                                                <span className="text-xs text-black font-semibold">
                                                     N/A
                                                 </span>
                                             )}
