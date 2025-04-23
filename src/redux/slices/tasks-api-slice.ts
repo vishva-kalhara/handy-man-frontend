@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const taskApiSlice = createApi({
     reducerPath: "tasks",
-    tagTypes: ["tasks"],
+    tagTypes: ["tasks", "my-tasks"],
     baseQuery: fetchBaseQuery({
         baseUrl: "/api/v1",
     }),
@@ -84,6 +84,20 @@ export const taskApiSlice = createApi({
                 },
                 invalidatesTags: ["tasks"],
             }),
+            getMyTasks: builder.query<Task[], void>({
+                query: () => {
+                    return {
+                        url: `/tasks/my-tasks`,
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${
+                                localStorage.getItem("token") || ""
+                            }`,
+                        },
+                    };
+                },
+                providesTags: ["my-tasks"],
+            }),
         };
     },
 });
@@ -94,4 +108,5 @@ export const {
     useDeleteTaskMutation,
     useGetAllTasksQuery,
     useCompleteTaskMutation,
+    useGetMyTasksQuery,
 } = taskApiSlice;

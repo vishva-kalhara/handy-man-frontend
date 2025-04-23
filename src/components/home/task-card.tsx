@@ -11,6 +11,7 @@ const TaskCard = ({ task }: { task: Task }) => {
                         alt="img"
                         src={task.image}
                         fill
+                        loading="lazy"
                         className={`rounded-lg object-cover ${
                             task.taskStatus != "PENDING" && "filter grayscale"
                         }`}

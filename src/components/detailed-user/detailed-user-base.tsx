@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import SignOutButton from "./sign-out-button";
 import { useState } from "react";
+import MyTasks from "./my-tasks";
 
 type Props = {
     isLoggedInUser: boolean;
@@ -65,7 +66,7 @@ const DetailedUserBase = ({ userId, isLoggedInUser }: Props) => {
                 {section == "REVIEWS" ? (
                     <UserReviews userId={user.id} />
                 ) : (
-                    <></>
+                    <MyTasks />
                 )}
             </div>
         </div>
