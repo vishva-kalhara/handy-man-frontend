@@ -29,7 +29,3 @@ Goal: Streamline home services while empowering local tradespeople.
 # Environment Variables
 
 -   `NEXT_PUBLIC_BASE_URL`: Base API URL
-
-# ⚖️ License
-
-Queue Up is an Open Source SaaS. [Licensed as MIT](https://github.com/vishva-kalhara/handy-man-frontend/blob/master/LICENSE)
