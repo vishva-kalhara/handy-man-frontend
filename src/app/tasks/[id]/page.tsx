@@ -72,6 +72,23 @@ const Page = () => {
                         user &&
                         task.chosenBidder?.id == user.id && <ChosenCard />}
 
+                    {task.taskStatus == "WAITING_TO_COMPLETE" &&
+                        user &&
+                        user.id == task.chosenBidder?.id && (
+                            <MiniChat
+                                isChatSelected={task.creator}
+                                setIsChatSelected={setIsChatVisible}
+                            />
+                        )}
+                    {task.taskStatus == "WAITING_TO_COMPLETE" &&
+                        user &&
+                        user.id == task.creator?.id && (
+                            <MiniChat
+                                isChatSelected={task.chosenBidder!}
+                                setIsChatSelected={setIsChatVisible}
+                            />
+                        )}
+
                     {task.taskStatus == "COMPLETED" &&
                         user &&
                         task.creator.id == user?.id &&

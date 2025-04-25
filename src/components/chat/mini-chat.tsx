@@ -49,7 +49,7 @@ const MiniChat = ({ isChatSelected, setIsChatSelected }: Props) => {
                             />
                         ) : (
                             <div className="absolute flex justify-center items-center inset-0 w-10 h-10 rounded-full bg-gray-200">
-                                <span className="text-4xl font-bold text-gray-500">
+                                <span className="text-xl font-bold text-gray-500">
                                     {isChatSelected.displayName
                                         .charAt(0)
                                         .toUpperCase()}
