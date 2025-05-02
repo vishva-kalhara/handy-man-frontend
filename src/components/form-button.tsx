@@ -5,12 +5,20 @@ import { cn } from "@/lib/utils";
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {
     isSubmitting: boolean;
+    testId?: string;
 }
 
-const FormButton = ({ isSubmitting, children, className, ...props }: Props) => {
+const FormButton = ({
+    isSubmitting,
+    children,
+    testId,
+    className,
+    ...props
+}: Props) => {
     return (
         <div className="flex justify-center">
             <Button
+                data-testid={testId || ""}
                 type="submit"
                 disabled={isSubmitting}
                 {...props}

@@ -78,6 +78,7 @@ const LoginForm = () => {
                 type="email"
                 placeholder="test@example.com"
                 name="email"
+                testId="txtEmail"
             />
             <InputField
                 displayName="Password:"
@@ -85,9 +86,10 @@ const LoginForm = () => {
                 register={register}
                 name="password"
                 type="password"
+                testId="txtPassword"
             />
             <RootError message={errors.root?.message} />
-            <FormButton isSubmitting={isSubmitting}>
+            <FormButton testId="btnSubmit" isSubmitting={isSubmitting}>
                 Sign In <ArrowRight size={5} />
             </FormButton>
         </form>

@@ -6,6 +6,7 @@ import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 interface Props<T extends FieldValues> extends HTMLAttributes<HTMLDivElement> {
     displayName: string;
     placeholder?: string;
+    testId?: string;
     error: undefined | string;
     name: Path<T>;
     hasDisplayName?: boolean;
@@ -20,6 +21,7 @@ const InputField = <T extends FieldValues>({
     register,
     type = "text",
     placeholder,
+    testId,
     error,
     ...props
 }: Props<T>) => {
@@ -27,13 +29,17 @@ const InputField = <T extends FieldValues>({
         <div className="mb-6" {...props}>
             {hasDisplayName && <Label>{displayName}</Label>}
             <Input
+                data-testid={testId || ""}
                 type={type}
                 placeholder={placeholder}
                 {...register(name)}
                 className="mt-2"
             />
             {error && (
-                <Label className="text-red-500 text-sm mt-1">
+                <Label
+                    data-testid={`${testId}_err`}
+                    className="text-red-500 text-sm mt-1"
+                >
                     {error.toString()}
                 </Label>
             )}
